@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<extension key="com.agiliway.civicalendar" type="module">
+  <file>calendar</file>
+  <name>Calendar</name>
+  <description>Calendar</description>
+  <license>AGPL-3.0</license>
+  <maintainer>
+    <author>AgiliWay</author>
+    <email>civicrm@agiliway.com</email>
+  </maintainer>
+  <urls>
+    <url desc="Main Extension Page">https://github.com/agiliway/com.agiliway.civicalendar</url>
+    <url desc="documentation">https://github.com/agiliway/com.agiliway.civicalendar/README.md</url>
+    <url desc="Support">https://agiliway.com</url>
+    <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url> 
+  </urls>
+  <releaseDate>2017-11-14</releaseDate>
+  <version>1.0</version>
+  <develStage>alpha</develStage>
+  <compatibility>
+    <ver>4.7</ver>
+  </compatibility>
+  <comments>Extension is working on real projects</comments>
+  <civix>
+    <namespace>CRM/Calendar</namespace>
+  </civix>
+</extension>

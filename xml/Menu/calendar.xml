@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/calendar</path>
+    <page_callback>CRM_Calendar_Page_Calendar</page_callback>
+    <title>Calendar</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/ajax/calendar</path>
+    <page_callback>CRM_Calendar_Page_AJAX::getContactEventCalendar</page_callback>
+    <title>AJAX</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+</menu>
