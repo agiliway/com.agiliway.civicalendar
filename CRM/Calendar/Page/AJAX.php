@@ -44,7 +44,7 @@ class CRM_Calendar_Page_AJAX
 
     while ($dao->fetch()) {
       if ($dao->title) {
-        $dao->url = CRM_Utils_System::url('civicrm/event/info', 'reset=1&id=' . $dao->id );
+        $dao->url = htmlspecialchars_decode(CRM_Utils_System::url('civicrm/event/info', 'reset=1&id=' . $dao->id ));
       }
 
       $eventData = array();
