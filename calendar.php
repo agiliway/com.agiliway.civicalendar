@@ -1,6 +1,7 @@
 <?php
 
 require_once 'calendar.civix.php';
+use CRM_Calendar_ExtensionUtil as E;
 
 /**
  * Implements hook_civicrm_config().
@@ -160,5 +161,22 @@ function calendar_civicrm_tabs(&$allTabs, $contactID = NULL)
   CRM_Core_Resources::singleton()->addStyleFile('com.agiliway.civicalendar', 'css/calendar.css', 201, 'html-header');
   CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'js/moment.min.js', 200, 'html-header');
   CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'js/fullcalendar.min.js', 201, 'html-header');
-  CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'locale/' . _calendar_civicrm_getSetting()['lang'] . '.js', 202, 'html-header');
+  CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'locale/' . CRM_Calendar_Settings::getValue('lang') . '.js', 202, 'html-header');
+}
+
+/**
+ * Implements hook_civicrm_navigationMenu().
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_navigationMenu
+ *
+ */
+function calendar_civicrm_navigationMenu(&$menu) {
+  $item[] =  array (
+    'name'       => 'Calendar Settings',
+    'url'        => 'civicrm/admin/calendar',
+    'permission' => 'administer CiviCRM',
+    'operator'   => NULL,
+    'separator'  => NULL,
+  );
+  _calendar_civix_insert_navigation_menu($menu, 'Administer/Customize Data and Screens', $item[0]);
 }

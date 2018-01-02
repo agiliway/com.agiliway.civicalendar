@@ -11,13 +11,17 @@ class CRM_Calendar_Page_Calendar extends CRM_Core_Page
       CRM_Core_Resources::singleton()->addStyleFile('com.agiliway.civicalendar', 'css/calendar.css', 201, 'html-header');
       CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'js/moment.min.js', 200, 'html-header');
       CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'js/fullcalendar.min.js', 201, 'html-header');
-      CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'locale/' . _calendar_civicrm_getSetting()['lang'] . '.js', 202, 'html-header');
+      CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'locale/' . CRM_Calendar_Settings::getValue('lang') . '.js', 202, 'html-header');
     }
 
     CRM_Utils_System::setTitle(ts('Calendar'));
     $this->_contactId = CRM_Utils_Request::retrieve('cid', 'Positive', $this, true);
 
-    $this->assign('settings', _calendar_civicrm_getSetting());
+    $settings = CRM_Calendar_Settings::get(array ('dayofmonthformat', 'defaultview', 'height', 'lang'));
+    $settings['dayOfMonthFormat'] = $settings['dayofmonthformat'];
+    $settings['defaultView'] = $settings['defaultview'];
+
+    $this->assign('settings', $settings);
     $this->assign('contactId', $this->_contactId);
 
     parent::run();
