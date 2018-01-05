@@ -5,8 +5,10 @@ class CRM_Calendar_Page_AJAX
 
   public static function getContactEventCalendar()
   {
-    $contact = CRM_Utils_Type::escape($_GET['cid'], 'Positive');
-
+    if(!empty($_GET['cid'])){ 
+        $contact = CRM_Utils_Type::escape($_GET['cid'], 'Positive');
+    }
+    
     if (!$contact) {
       global $user;
 
@@ -78,6 +80,7 @@ class CRM_Calendar_Page_AJAX
       JOIN civicrm_option_group ON civicrm_option_group.id = civicrm_option_value.option_group_id AND civicrm_option_group.name = "activity_type" AND civicrm_option_value.component_id IS NOT NULL
       
       WHERE civicrm_case_contact.contact_id = ' . $contact . '
+      AND civicrm_case.is_deleted=0 AND civicrm_activity.is_deleted=0
       AND ( (civicrm_activity.activity_date_time >= "' . gmdate("Y-m-d H:i:s", $_REQUEST["start"]) . '"
       AND COALESCE (DATE_ADD(civicrm_activity.activity_date_time, INTERVAL COALESCE (civicrm_activity.duration, 30) MINUTE),civicrm_activity.activity_date_time) <= "' . gmdate("Y-m-d H:i:s", $_REQUEST["end"]) . '" )
       OR ("' . date("Y-m-d H:i:s", $_REQUEST["start"]) . '" BETWEEN civicrm_activity.activity_date_time AND COALESCE (DATE_ADD(civicrm_activity.activity_date_time, INTERVAL COALESCE (civicrm_activity.duration, 30) MINUTE),civicrm_activity.activity_date_time)))
@@ -125,7 +128,8 @@ class CRM_Calendar_Page_AJAX
       LEFT JOIN civicrm_case_activity ON civicrm_case_activity.activity_id = civicrm_activity.id
       
       WHERE civicrm_activity_contact.contact_id = "' . $contact . '" AND (civicrm_activity.activity_date_time > "' . date("Y-m-d H:i:s", $_REQUEST["start"]) . '" AND civicrm_activity.activity_date_time < "' . date("Y-m-d H:i:s", $_REQUEST["end"]) . '") AND civicrm_case_activity.activity_id IS NULL
-      AND activity_type_id IN (
+        AND civicrm_activity.is_deleted=0      
+        AND activity_type_id IN (
         SELECT civicrm_option_value.value FROM civicrm_option_value
         JOIN civicrm_option_group ON civicrm_option_group.id = civicrm_option_value.option_group_id
         WHERE civicrm_option_group.name = "activity_type" AND civicrm_option_value.component_id IS NULL

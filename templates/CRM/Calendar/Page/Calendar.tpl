@@ -10,9 +10,9 @@
                 {ts}Add{/ts}
             </div>
             <div data-div="add-button-open" class="add-button-open" style="display: none">
-                <a href="/civicrm/case/add?reset=1&action=add&context=case&cid={$contactId}" target="_blank">{ts}Cases{/ts}</a><br>
-                <a href="/civicrm/event/add?reset=1&action=add&context=participant" target="_blank">{ts}Events{/ts}</a><br>
-                <a href="/civicrm/activity?reset=1&action=add&context=standalone" target="_blank">{ts}Activities{/ts}</a>
+                <a data-popup="1" href="/civicrm/case/add?reset=1&action=add&context=case&cid={$contactId}" >{ts}Cases{/ts}</a><br>
+                <a data-popup="0" href="/civicrm/event/add?reset=1&action=add&context=participant&cid={$contactId}" >{ts}Events{/ts}</a><br>
+                <a data-popup="1" href="/civicrm/activity?reset=1&action=add&context=standalone&cid={$contactId}" >{ts}Activities{/ts}</a>
             </div>
         </div>
     </div>
@@ -57,6 +57,7 @@
     CRM.$(function ($) {
         $(document).ready(function () {
             initContactEventCalendar();
+            initButtons();
         });
 
         function initContactEventCalendar() {
@@ -76,7 +77,7 @@
                 height: settings.attr('data-height'),
                 defaultView: settings.attr('data-defaultView'),
                 firstDay: 1,
-                displayEventTime: false,
+                displayEventTime: true,
                 eventSources: '',
                 eventRender: eventRenderCallbackContactEventCalendar,
                 eventClick: function (event, element) {
@@ -156,26 +157,43 @@
             element.context.setAttribute("title", text);
         }
 
-        $(document).on('click', '[data-button="add-event"]', function() {
-            var $addButtonOpen = $('[data-div="add-button-open"]');
-
-            if ($addButtonOpen.css('display') === 'none') {
-                $addButtonOpen.css('left',($(this).width() + 10) + 'px');
-                $addButtonOpen.css('display', 'inline-block');
-            }
-            else {
-                $addButtonOpen.css('display', 'none');
-            }
-        });
-
-        $(document).on('mouseup', 'body', function(e) {
-            var container = $('[data-div="add-button-open"]');
-            if (container.has(e.target).length === 0){
-                container.hide();
-            }
-        });
+        function initButtons(){
+            $(document).on('click', '[data-button="add-event"]', function() {
+                var $addButtonOpen = $('[data-div="add-button-open"]');
     
+                if ($addButtonOpen.css('display') === 'none') {
+                    $addButtonOpen.css('left',($(this).width() + 10) + 'px');
+                    $addButtonOpen.css('display', 'inline-block');
+                }
+                else {
+                    $addButtonOpen.css('display', 'none');
+                }
+            });
+    
+            $(document).on('mouseup', 'body', function(e) {
+                var container = $('[data-div="add-button-open"]');
+                if (container.has(e.target).length === 0){
+                    container.hide();
+                }
+            });
+        }
+        
+        $(document).on('click', '[data-div="add-button-open"] a', function() {
+           var 
+            $el = $(this),url = $el.attr('href'),
+            isPopup = $el.attr('data-popup');
+          if (isPopup==1 && url) {
+            CRM.loadForm(url).on('crmFormSuccess', function() {
+              CRM.refreshParent($el);
+              initButtons();
+            });
+            
+          }else{
+            window.open(url, "_blank");
+          }
+          return false;
+        });
+        
     });
-
 </script>
 {/literal}
