@@ -1,5 +1,5 @@
 Package: com.agiliway.civicalendar
-Copyright (C) 2017, ikatsiuba <ikatsiuba@gmail.com>
+Copyright (C) 2017, Agiliway <civicrm@agiliway.com>
 Licensed under the GNU Affero Public License 3.0 (below).
 
 -------------------------------------------------------------------------------

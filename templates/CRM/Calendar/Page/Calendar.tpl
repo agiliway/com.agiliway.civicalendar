@@ -10,7 +10,7 @@
                 {ts}Add{/ts}
             </div>
             <div data-div="add-button-open" class="add-button-open" style="display: none">
-                <a href="/civicrm/case/add?reset=1&action=add&context=case" target="_blank">{ts}Cases{/ts}</a><br>
+                <a href="/civicrm/case/add?reset=1&action=add&context=case&cid={$contactId}" target="_blank">{ts}Cases{/ts}</a><br>
                 <a href="/civicrm/event/add?reset=1&action=add&context=participant" target="_blank">{ts}Events{/ts}</a><br>
                 <a href="/civicrm/activity?reset=1&action=add&context=standalone" target="_blank">{ts}Activities{/ts}</a>
             </div>
