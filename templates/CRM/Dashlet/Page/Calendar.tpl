@@ -48,6 +48,7 @@
         data-defaultView="{$settings.defaultView}"
         data-height="{$settings.height}"
         data-scrollTime="{$settings.scrollTime}"
+        data-timeFormat="{$settings.timeFormat}"
     >
     </div>
 </div>
@@ -78,6 +79,7 @@
                 height: settings.attr('data-height'),
                 defaultView: settings.attr('data-defaultView'),
                 scrollTime: settings.attr('data-scrollTime'),
+                timeFormat: settings.attr('data-timeFormat'),
                 firstDay: 1,
                 displayEventTime: true,
                 eventSources: '',

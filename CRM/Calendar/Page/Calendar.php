@@ -17,10 +17,11 @@ class CRM_Calendar_Page_Calendar extends CRM_Core_Page
     CRM_Utils_System::setTitle(ts('Calendar'));
     $this->_contactId = CRM_Utils_Request::retrieve('cid', 'Positive', $this, true);
 
-    $settings = CRM_Calendar_Settings::get(array ('scrolltime', 'defaultview', 'dayofmonthformat', 'hidepastevents', 'lang', 'height'));
+    $settings = CRM_Calendar_Settings::get(array ('scrolltime', 'defaultview', 'dayofmonthformat', 'timeformat', 'hidepastevents', 'lang', 'height'));
     $settings['scrollTime'] = $settings['scrolltime'];
     $settings['defaultView'] = $settings['defaultview'];
     $settings['dayOfMonthFormat'] = $settings['dayofmonthformat'];
+    $settings['timeFormat'] = $settings['timeformat'];
     $settings['hidePastEvents'] = $settings['hidepastevents'];
     $settings['lang'] = $settings['lang'];
     $settings['height'] = $settings['height'];

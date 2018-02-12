@@ -3,7 +3,8 @@
 return array(
   'scrollTime' => array('default' => '6:00'),
   'defaultView' => array('default' => 'month'),
-  'dayOfMonthFormat' => array('default' =>'ddd DD'),
+  'dayOfMonthFormat' => array('default' => 'ddd DD'),
+  'timeFormat' => array('default' => 'h(:mm)t'),
   'hidePastEvents' => array('default' => '0'),
   'lang' => array('default' => CRM_Core_I18n::getLocale()),  
   'height' => array('default' => '500'),
@@ -72,6 +73,28 @@ return array(
     'html_type' => 'Text',
     'html_attributes' => array(
       'size' => 20,
+    ),
+  ),
+ 
+  'civicalendar_timeformat' => array(
+    'group_name' => 'CiviCalendar Settings',
+    'group' => 'civicalendar',
+    'name' => 'civicalendar_timeformat',
+    'type' => 'String',
+    'add' => '4.7',
+    'is_domain' => 1,
+    'is_contact' => 0,
+    'default' => 'h(:mm)t',
+    'description' => ts('Time Format'),
+    'html_type' => 'Select',
+    'html_attributes' => array(
+      'size' => 20,
+    ),
+    'option_values' => array(
+      'h:mm' => ts('5:00'),
+      'h(:mm)t' => ts('5p'),
+      'H:mm' => ts('17:00'), 
+      'H(:mm)' => ts('17'), 
     ),
   ),
 
