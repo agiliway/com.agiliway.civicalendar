@@ -8,12 +8,16 @@ The Calendar allows:
 * **Filtering** visualized data by types
 * **Adding** new activity directly from the Calendar
 * **Quickly previewing** the event info by one click
+* Display Calendar on CIVCRM dashboard as **dashlet**
 
 ![Screenshot](/img/screenshot_m.png)
+![Screenshot](/img/screenshot_dashboard.png)
+![Screenshot](/img/screenshot_settings.png)
 
 ## Requirements
 
  * CiviCRM v4.6.x, v4.7.x
+ * Drupal 7.x
 
 ## Installation (git/cli)
  

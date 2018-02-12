@@ -19,6 +19,8 @@ class CRM_Calendar_Page_AJAX
       $uid = $user->uid;
       $contact = CRM_Core_BAO_UFMatch::getContactId($uid);
     }
+    
+    $hidePastEvents = CRM_Calendar_Settings::getValue('hidepastevents');
 
     $events = array();
     $eventCalendarParams = array('title' => 'title', 'start' => 'start', 'url' => 'url', 'end' => 'end');
@@ -41,6 +43,11 @@ class CRM_Calendar_Page_AJAX
           OR "' . gmdate("Y-m-d H:i:s", $_REQUEST["start"]) . '" BETWEEN civicrm_event.start_date AND civicrm_event.end_date
         )
     ';
+
+    /** Hide Past Events when hidePastEvents setting is enabled **/
+    if ($hidePastEvents == "1") {
+       $query .= ' AND civicrm_event.start_date > NOW()';
+    }
 
     $dao = CRM_Core_DAO::executeQuery($query);
 
@@ -86,6 +93,11 @@ class CRM_Calendar_Page_AJAX
       OR ("' . date("Y-m-d H:i:s", $_REQUEST["start"]) . '" BETWEEN civicrm_activity.activity_date_time AND COALESCE (DATE_ADD(civicrm_activity.activity_date_time, INTERVAL COALESCE (civicrm_activity.duration, 30) MINUTE),civicrm_activity.activity_date_time)))
     ';
 
+    /** Hide Past Cases when hidePastEvents setting is enabled **/
+    if ($hidePastEvents == "1") {
+       $query .= ' AND civicrm_activity.activity_date_time > NOW()';
+    }
+
     $dao = CRM_Core_DAO::executeQuery($query);
 
     $i = 1;
@@ -130,11 +142,17 @@ class CRM_Calendar_Page_AJAX
       WHERE civicrm_activity_contact.contact_id = "' . $contact . '" AND (civicrm_activity.activity_date_time > "' . date("Y-m-d H:i:s", $_REQUEST["start"]) . '" AND civicrm_activity.activity_date_time < "' . date("Y-m-d H:i:s", $_REQUEST["end"]) . '") AND civicrm_case_activity.activity_id IS NULL
         AND civicrm_activity.is_deleted=0      
         AND activity_type_id IN (
-        SELECT civicrm_option_value.value FROM civicrm_option_value
-        JOIN civicrm_option_group ON civicrm_option_group.id = civicrm_option_value.option_group_id
-        WHERE civicrm_option_group.name = "activity_type" AND civicrm_option_value.component_id IS NULL
-      )
+          SELECT civicrm_option_value.value FROM civicrm_option_value
+          JOIN civicrm_option_group ON civicrm_option_group.id = civicrm_option_value.option_group_id
+          WHERE civicrm_option_group.name = "activity_type" 
+            AND civicrm_option_value.component_id IS NULL
+        )
     ';
+
+    /** Hide Past Activities when hidePastEvents setting is enabled **/
+    if ($hidePastEvents == "1") {
+       $query .= ' AND civicrm_activity.activity_date_time > NOW()';
+    }
 
     $dao = CRM_Core_DAO::executeQuery($query);
 

@@ -21,7 +21,7 @@
             <div class="filter__item-checkbox" style="border-color:#35D0AE">
                 <div class="filter__item-check" style="border-color:#35D0AE"></div>
             </div>
-            <input id="filterCheckboxCase" class="styled_checkbox cases_checkbox" type="checkbox" checked="checked" />
+            <input id="filterCheckboxCase-{$context}" class="styled_checkbox cases_checkbox" type="checkbox" checked="checked" />
             <span>{ts}Cases{/ts}</span>
         </label>
 
@@ -29,7 +29,7 @@
             <div class="filter__item-checkbox" style="border-color:#ff0000">
                 <div class="filter__item-check" style="border-color:#ff0000"></div>
             </div>
-            <input id="filterCheckboxEvents" class="styled_checkbox events_checkbox" type="checkbox" checked="checked" />
+            <input id="filterCheckboxEvents-{$context}" class="styled_checkbox events_checkbox" type="checkbox" checked="checked" />
             <span>{ts}Events{/ts}</span>
         </label>
 
@@ -37,11 +37,11 @@
             <div class="filter__item-checkbox" style="border-color:#F7CF5D">
                 <div class="filter__item-check" style="border-color:#F7CF5D"></div>
             </div>
-            <input id="filterCheckboxActivity" class="styled_checkbox activities_checkbox" type="checkbox" checked="checked" />
+            <input id="filterCheckboxActivity-{$context}" class="styled_checkbox activities_checkbox" type="checkbox" checked="checked" />
             <span>{ts}Activities{/ts}</span>
         </label>
     </div>
-    <div id="contactEventCalendar"></div>
+    <div id="contactEventCalendar-{$context}"></div>
     <div
         data-div="settings"
         data-dayOfMonthFormat="{$settings.dayOfMonthFormat}"
@@ -54,21 +54,21 @@
 
 {literal}
 <script type="text/javascript">
-
     CRM.$(function ($) {
+        
         $(document).ready(function () {
-            initContactEventCalendar();
-            initButtons();
+            initContactEventCalendar{/literal}{$context}{literal}();
+            initButtons{/literal}{$context}{literal}();
         });
 
-        function initContactEventCalendar() {
+        function initContactEventCalendar{/literal}{$context}{literal}() {
             var events_data;
-            var checked_events = $('#filterCheckboxEvents').attr("checked");
-            var checked_case = $('#filterCheckboxCase').attr("checked");
-            var checked_activity = $('#filterCheckboxActivity').attr("checked");
+            var checked_events = $('#filterCheckboxEvents-{/literal}{$context}{literal}').attr("checked");
+            var checked_case = $('#filterCheckboxCase-{/literal}{$context}{literal}').attr("checked");
+            var checked_activity = $('#filterCheckboxActivity-{/literal}{$context}{literal}').attr("checked");
             var settings = $('[data-div="settings"]');
 
-            var events_calendar = CRM.$('#contactEventCalendar').fullCalendar({
+            var events_calendar = CRM.$('#contactEventCalendar-{/literal}{$context}{literal}').fullCalendar({
                 header: {
                     left: 'prev,next today',
                     center: 'title',
@@ -122,7 +122,7 @@
                 }
             });
 
-            $('#filterCheckboxEvents').change(function() {
+            $('#filterCheckboxEvents-{/literal}{$context}{literal}').change(function() {
                 if(this.checked) {
                     checked_events = true;
                     events_calendar.fullCalendar('addEventSource', events_data['events']);
@@ -132,7 +132,7 @@
                 events_calendar.fullCalendar( 'removeEventSource', events_data['events']);
             });
 
-            $('#filterCheckboxCase').change(function() {
+            $('#filterCheckboxCase-{/literal}{$context}{literal}').change(function() {
                 if(this.checked) {
                     checked_case = true;
                     events_calendar.fullCalendar('addEventSource', events_data['case']);
@@ -142,7 +142,7 @@
                 events_calendar.fullCalendar( 'removeEventSource', events_data['case']);
             });
 
-            $('#filterCheckboxActivity').change(function() {
+            $('#filterCheckboxActivity-{/literal}{$context}{literal}').change(function() {
                 if(this.checked) {
                     checked_activity = true;
                     events_calendar.fullCalendar('addEventSource', events_data['activity']);
@@ -159,7 +159,7 @@
             element.context.setAttribute("title", text);
         }
 
-        function initButtons(){
+        function initButtons{/literal}{$context}{literal}(){
             $(document).on('click', '[data-button="add-event"]', function() {
                 var $addButtonOpen = $('[data-div="add-button-open"]');
     
@@ -197,5 +197,6 @@
         });
         
     });
+ 
 </script>
 {/literal}

@@ -21,4 +21,9 @@
     <page_type>0</page_type>
     <component>Contact</component>
   </item>
+  <item>
+     <path>civicrm/dashlet/calendar</path>
+     <title>CiviCRM Calendar</title>
+     <page_callback>CRM_Dashlet_Page_Calendar</page_callback>
+  </item>
 </menu>

@@ -157,11 +157,7 @@ function calendar_civicrm_tabs(&$allTabs, $contactID = NULL)
 
   array_push($allTabs, $newTab);
 
-  CRM_Core_Resources::singleton()->addStyleFile('com.agiliway.civicalendar', 'css/fullcalendar.min.css', 200, 'html-header');
-  CRM_Core_Resources::singleton()->addStyleFile('com.agiliway.civicalendar', 'css/calendar.css', 201, 'html-header');
-  CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'js/moment.min.js', 200, 'html-header');
-  CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'js/fullcalendar.min.js', 201, 'html-header');
-  CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'locale/' . CRM_Calendar_Settings::getValue('lang') . '.js', 202, 'html-header');
+  _calendar_civix_addJSCss();
 }
 
 /**
@@ -179,4 +175,29 @@ function calendar_civicrm_navigationMenu(&$menu) {
     'separator'  => NULL,
   );
   _calendar_civix_insert_navigation_menu($menu, 'Administer/Customize Data and Screens', $item[0]);
+}
+
+function calendar_civicrm_dashboard($contactID, &$contentPlacement)
+{
+    $session = CRM_Core_Session::singleton();
+    $contactID = $session->get('userID');
+    
+    $isOnDashboard = CRM_Core_DAO::singleValueQuery("
+        SELECT count(*) FROM civicrm_dashboard
+        WHERE name='calendar' and is_active=1 and domain_id in (select id from civicrm_domain where name = 'Default Domain Name')
+      ");
+    if($isOnDashboard){
+        _calendar_civix_addJSCss();
+    }
+    return '';
+} 
+
+function  _calendar_civix_addJSCss()
+{
+    CRM_Core_Resources::singleton()->addStyleFile('com.agiliway.civicalendar', 'css/fullcalendar.min.css', 200, 'html-header');
+    CRM_Core_Resources::singleton()->addStyleFile('com.agiliway.civicalendar', 'css/calendar.css', 201, 'html-header');
+    CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'js/moment.min.js', 200, 'html-header');
+    CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'js/fullcalendar.min.js', 201, 'html-header');
+    CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'locale/' . CRM_Calendar_Settings::getValue('lang') . '.js', 202, 'html-header');
+    
 }

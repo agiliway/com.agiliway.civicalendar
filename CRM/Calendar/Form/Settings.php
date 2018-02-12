@@ -47,6 +47,9 @@ class CRM_Calendar_Form_Settings extends CRM_Core_Form {
           case 'Checkbox':
             $this->addElement('checkbox', $name, ts($setting['description']), '', '');
             break;
+          case 'Select':
+            $this->addElement('select', $name, ts($setting['description']), $setting['option_values']);
+            break;
         }
       }
     }
