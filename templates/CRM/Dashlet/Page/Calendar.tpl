@@ -49,6 +49,7 @@
         data-height="{$settings.height}"
         data-scrollTime="{$settings.scrollTime}"
         data-timeFormat="{$settings.timeFormat}"
+        data-locale="{$settings.locale}"
     >
     </div>
 </div>
@@ -73,13 +74,14 @@
                 header: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
+                    right: 'month,agendaWeek,agendaDay,listMonth'
                 },
                 dayOfMonthFormat: settings.attr('data-dayOfMonthFormat'),
                 height: settings.attr('data-height'),
                 defaultView: settings.attr('data-defaultView'),
                 scrollTime: settings.attr('data-scrollTime'),
                 timeFormat: settings.attr('data-timeFormat'),
+                locale: settings.attr('data-locale'),
                 firstDay: 1,
                 displayEventTime: true,
                 eventSources: '',
