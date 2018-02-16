@@ -147,3 +147,61 @@ div.crm-container label {
 .fc-time {
     color: black !important;
 }
+.fc-agendaWeek-view .fc-time-grid-event .fc-content,
+.fc-agendaDay-view .fc-time-grid-event .fc-content{
+    line-height: 1.85em;
+}
+.fc-agendaWeek-view .fc-time-grid-event .fc-content .fc-title,
+.fc-agendaDay-view .fc-time-grid-event .fc-content .fc-title,
+.fc-agendaWeek-view .fc-time-grid-event .fc-content .fc-time,
+.fc-agendaDay-view .fc-time-grid-event .fc-content .fc-time{
+    font-size: 1em;
+}
+.fc-month-view .fc-day-grid-event .fc-content .fc-time{
+    font-weight: 400;
+}
+.fc-month-view .fc-day-grid-event[style*="background-color:#ff0000;border-color:#ff0000"],
+.fc-agendaWeek-view .fc-time-grid-event[style*="background-color: rgb(255, 0, 0); border-color: rgb(255, 0, 0)"],
+.fc-agendaDay-view .fc-time-grid-event[style*="background-color: rgb(255, 0, 0); border-color: rgb(255, 0, 0)"],
+.fc-list-view .fc-list-item-marker.fc-widget-content .fc-event-dot[style="background-color:#ff0000"]{
+    background-color: #fca2a4!important;
+    border-color: #fca2a4!important;
+}
+
+.tabsBlockContent .add__ev__wrapper{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.tabsBlockContent .calendar_item_types{
+    float: right;
+    display: inline-block;
+    padding-top: 5px;
+}
+.tabsBlockContent .fc-header-toolbar .fc-left,
+.tabsBlockContent .fc-header-toolbar .fc-right{
+    margin: 10px 0;
+}
+.tabsBlockContent .fc-header-toolbar{
+    margin-bottom: 10px;
+}
+.tabsBlockContent .fc-header-toolbar .fc-center{
+    display: block;
+}
+.tabsBlockContent .fc-header-toolbar .fc-center h2{
+    width: 100%;
+}
+td.fc-widget-header,
+th.fc-widget-header{
+    font-weight: 400;
+    color:#000000;
+}
+div.fc-widget-header > table{
+    margin:0;
+}
+div.fc-widget-header > table th{
+    padding: 5px 0;
+}
+.ui-tabs-panel .tabsBlockContent .fc-header-toolbar .fc-center{
+    display: inline-block;
+    margin-top: 10px;
+}

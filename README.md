@@ -4,14 +4,26 @@ The **CiviCalendar** extension (`com.agiliway.civicalendar`) is an CiviCRM compo
 
 The Calendar allows:
 * Viewing info on **different types** of activities (`Cases, Events, Activities`). Each type uses its own color
-* Setup different **time periods** - month, week, day
+* Setup different **time periods** - month, week, day, list
 * **Filtering** visualized data by types
+* Display or hide **past events**
 * **Adding** new activity directly from the Calendar
 * **Quickly previewing** the event info by one click
 * Display Calendar on CIVCRM dashboard as **dashlet**
+* Supports 73 **locales**
 
-![Screenshot](/img/screenshot_m.png)
+## Screenshots
+
 ![Screenshot](/img/screenshot_dashboard.png)
+---
+![Screenshot](/img/screenshot_month.png)
+---
+![Screenshot](/img/screenshot_week.png)
+---
+![Screenshot](/img/screenshot_day.png)
+---
+![Screenshot](/img/screenshot_list.png)
+---
 ![Screenshot](/img/screenshot_settings.png)
 
 ## Requirements
