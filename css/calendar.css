@@ -183,6 +183,10 @@ div.crm-container label {
 }
 .tabsBlockContent .fc-header-toolbar{
     margin-bottom: 10px;
+    width: 100%;
+    content: "";
+    clear: both;
+    display: table;
 }
 .tabsBlockContent .fc-header-toolbar .fc-center{
     display: block;
@@ -201,7 +205,8 @@ div.fc-widget-header > table{
 div.fc-widget-header > table th{
     padding: 5px 0;
 }
-.ui-tabs-panel .tabsBlockContent .fc-header-toolbar .fc-center{
+.ui-tabs-panel .tabsBlockContent .fc-header-toolbar .fc-center,
+.tabsBlockContent .fc-header-toolbar .fc-center {
     display: inline-block;
     margin-top: 10px;
 }
