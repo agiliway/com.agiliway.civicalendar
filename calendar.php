@@ -184,7 +184,7 @@ function calendar_civicrm_dashboard($contactID, &$contentPlacement)
     
     $isOnDashboard = CRM_Core_DAO::singleValueQuery("
         SELECT count(*) FROM civicrm_dashboard
-        WHERE name='calendar' and is_active=1 and domain_id in (select id from civicrm_domain where name = 'Default Domain Name')
+        WHERE name='calendar' and is_active=1 and domain_id in (select MIN(id) FROM civicrm_domain)
       ");
     if($isOnDashboard){
         _calendar_civix_addJSCss();
