@@ -1,35 +1,33 @@
 # CiviCalendar
 
-The **CiviCalendar** extension (`com.agiliway.civicalendar`) is an CiviCRM component which allows visualizing different types of events and activities. The extension provides a rich intuitive user interface and simple navigation.
+The **CiviCalendar** extension (`com.agiliway.civicalendar`) is an CiviCRM component which allows visualizing the planned cases, events and activities. The extension provides a rich intuitive user interface and many complementary features.
 
 The Calendar allows:
-* Viewing info on **different types** of activities (`Cases, Events, Activities`). Each type uses its own color
-* Setup different **time periods** - month, week, day, list
-* **Filtering** visualized data by types
-* Display or hide **past events**
+* Viewing info on **different types** of activities (`Cases, Events, Activities`)
+* Easily **distinguishing** between the types of plans by the color of the line that appears before the title
+* Viewing info for different **time periods** - month, week, day
+* **Filtering** visualized data by 7 different parameters: event type, participant's status on the event, case type, case status, activity type, activity status and role in an activity
+* Displaying or hiding **past events**
+* Displaying the **plans of 5 other constituents** in one’s own graphical calendar
 * **Adding** new activity directly from the Calendar
-* **Quickly previewing** the event info by one click
-* Display Calendar on CIVCRM dashboard as **dashlet**
-* Supports 73 **locales**
+* **Quickly previewing** the event info in one click​
+* Display Calendar on CiviCRM dashboard as **​dashlet**
+* Supports 73 ​**locales**
 
 ## Screenshots
 
-![Screenshot](/img/screenshot_dashboard.png)
+![Screenshot](/img/calendar_dashlet.png)
 ---
-![Screenshot](/img/screenshot_month.png)
+![Screenshot](/img/calendar_dashlet_list.png)
 ---
-![Screenshot](/img/screenshot_week.png)
+![Screenshot](/img/calendar_view.png)
 ---
-![Screenshot](/img/screenshot_day.png)
----
-![Screenshot](/img/screenshot_list.png)
----
-![Screenshot](/img/screenshot_settings.png)
+![Screenshot](/img/calendar_sharing.png)
+
 
 ## Requirements
 
- * CiviCRM v4.6.x, v4.7.x
- * Drupal 7.x
+ * CiviCRM v4.6.x, v4.7.x, v5.x
 
 ## Installation (git/cli)
  
@@ -37,6 +35,5 @@ To install the extension on an existing CiviCRM site:
 ```
 mkdir sites/all/modules/civicrm/ext
 cd sites/all/modules/civicrm/ext
-git clone https://github.com/agiliway/com.agiliway.civicalendar civicalendar
-cv en civicalendar
+git clone https://github.com/agiliway/com.agiliway.civicalendar com.agiliway.civicalendar
 ```

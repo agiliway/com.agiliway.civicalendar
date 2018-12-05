@@ -1,16 +1,15 @@
 <?php
 
-return array(
-  'scrollTime' => array('default' => '6:00'),
-  'defaultView' => array('default' => 'month'),
-  'dayOfMonthFormat' => array('default' => 'ddd DD'),
-  'timeFormat' => array('default' => 'h(:mm)t'),
-  'hidePastEvents' => array('default' => '0'),
-  'locale' => array('default' => CRM_Core_I18n::getLocale()),  
-  'height' => array('default' => '500'),
+return [
+  'scrollTime' => ['default' => '6:00'],
+  'defaultView' => ['default' => 'month'],
+  'dayOfMonthFormat' => ['default' => 'ddd DD'],
+  'timeFormat' => ['default' => 'h(:mm)t'],
+  'hidePastEvents' => ['default' => '0'],
+  'locale' => ['default' => CRM_Core_I18n::getLocale()],
+  'height' => ['default' => '500'],
 
-
-  'civicalendar_scrolltime' => array(
+  'civicalendar_scrolltime' => [
     'group_name' => 'CiviCalendar Settings',
     'group' => 'civicalendar',
     'name' => 'civicalendar_scrolltime',
@@ -21,10 +20,10 @@ return array(
     'default' => '6:00:00',
     'description' => ts('Scroll pane is initially scrolled down to 6:00 AM'),
     'html_type' => 'Select',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 20,
-    ),
-    'option_values' => array(
+    ],
+    'option_values' => [
       '12:00:00' => '12:00 am',
       '1:00:00' => '1:00 am',
       '2:00:00' => '2:00 am',
@@ -36,10 +35,10 @@ return array(
       '8:00:00' => '8:00 am',
       '9:00:00' => '9:00 am',
       '10:00:00' => '10:00 am',
-    ),
-  ),
+    ],
+  ],
 
-  'civicalendar_defaultview' => array(
+  'civicalendar_defaultview' => [
     'group_name' => 'CiviCalendar Settings',
     'group' => 'civicalendar',
     'name' => 'civicalendar_defaultview',
@@ -50,18 +49,18 @@ return array(
     'default' => 'month',
     'description' => ts('Default tab for calendar (month, week, day, agenda)'),
     'html_type' => 'Select',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 20,
-    ),
-    'option_values' => array(
+    ],
+    'option_values' => [
       'month' => ts('month'),
       'agendaWeek' => ts('week'),
-      'agendaDay' => ts('day'), 
-      'listMonth' => ts('agenda'), 
-    ),
-  ),
- 
-  'civicalendar_dayofmonthformat' => array(
+      'agendaDay' => ts('day'),
+      'listMonth' => ts('agenda'),
+    ],
+  ],
+
+  'civicalendar_dayofmonthformat' => [
     'group_name' => 'CiviCalendar Settings',
     'group' => 'civicalendar',
     'name' => 'civicalendar_dayofmonthformat',
@@ -72,12 +71,12 @@ return array(
     'default' => 'ddd DD',
     'description' => ts('Day of Month Format (eg. ddd DD)'),
     'html_type' => 'Text',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 20,
-    ),
-  ),
- 
-  'civicalendar_timeformat' => array(
+    ],
+  ],
+
+  'civicalendar_timeformat' => [
     'group_name' => 'CiviCalendar Settings',
     'group' => 'civicalendar',
     'name' => 'civicalendar_timeformat',
@@ -88,18 +87,18 @@ return array(
     'default' => 'h(:mm)t',
     'description' => ts('Time Format'),
     'html_type' => 'Select',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 20,
-    ),
-    'option_values' => array(
+    ],
+    'option_values' => [
       'h:mm' => ts('5:00'),
       'h(:mm)t' => ts('5p'),
-      'H:mm' => ts('17:00'), 
-      'H(:mm)' => ts('17'), 
-    ),
-  ),
+      'H:mm' => ts('17:00'),
+      'H(:mm)' => ts('17'),
+    ],
+  ],
 
-  'civicalendar_locale' => array(
+  'civicalendar_locale' => [
     'group_name' => 'CiviCalendar Settings',
     'group' => 'civicalendar',
     'name' => 'civicalendar_locale',
@@ -110,10 +109,10 @@ return array(
     'default' => CRM_Core_I18n::getLocale(),
     'description' => ts('Locale'),
     'html_type' => 'Select',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 20,
-    ),
-    'option_values' => array(
+    ],
+    'option_values' => [
       'en' => 'en',
       'af' => 'af',
       'ar-dz' => 'ar-dz',
@@ -186,10 +185,10 @@ return array(
       'vi' => 'vi',
       'zh-cn' => 'zh-cn',
       'zh-tw' => 'zh-tw',
-    ),
-  ),
+    ],
+  ],
 
-  'civicalendar_hidepastevents' => array(
+  'civicalendar_hidepastevents' => [
     'group_name' => 'CiviCalendar Settings',
     'group' => 'civicalendar',
     'name' => 'civicalendar_hidepastevents',
@@ -200,9 +199,9 @@ return array(
     'default' => '0',
     'description' => ts('Hide past events'),
     'html_type' => 'Checkbox',
-  ),
+  ],
 
-  'civicalendar_height' => array(
+  'civicalendar_height' => [
     'group_name' => 'CiviCalendar Settings',
     'group' => 'civicalendar',
     'name' => 'civicalendar_height',
@@ -213,8 +212,8 @@ return array(
     'default' => '500',
     'description' => ts('Height (eg. 500)'),
     'html_type' => 'Text',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 20,
-    ),
-  ),
-);
+    ],
+  ],
+];

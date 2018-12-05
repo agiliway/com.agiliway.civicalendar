@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="76px" height="76px" viewBox="0 0 76 76" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>Blank Profile Picture / Person</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Blank-Profile-Picture-/-Person" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="bkgd" fill="#EBECF0" x="-1" y="0" width="76" height="76" rx="38"></rect>
+        <g id="avatar" transform="translate(17.000000, 18.000000)" fill="#AEB4B7">
+            <path d="M39.9,34.048 L39.9,35.91 C39.9,38.1045 38.1045,39.9 35.91,39.9 L3.99,39.9 C1.7955,39.9 0,38.1045 0,35.91 L0,34.048 C0,29.1935 5.6525,26.2675 10.9725,23.94 C11.172,23.8735 11.305,23.807 11.5045,23.674 C11.9035,23.4745 12.369,23.4745 12.768,23.7405 C14.896,25.137 17.3565,25.935 19.95,25.935 C22.5435,25.935 25.004,25.137 27.132,23.807 C27.531,23.541 27.9965,23.541 28.3955,23.7405 C28.595,23.807 28.728,23.8735 28.9275,24.0065 C34.2475,26.2675 39.9,29.1935 39.9,34.048"
+                  id="Fill-1"></path>
+            <path d="M19.95,0 C25.422285,0 29.8585,4.912355 29.8585,10.9725 C29.8585,17.032645 25.422285,21.945 19.95,21.945 C14.477715,21.945 10.0415,17.032645 10.0415,10.9725 C10.0415,4.912355 14.477715,0 19.95,0"
+                  id="Fill-3"></path>
+        </g>
+    </g>
+</svg>

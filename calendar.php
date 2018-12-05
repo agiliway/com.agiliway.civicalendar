@@ -1,6 +1,7 @@
 <?php
 
 require_once 'calendar.civix.php';
+
 use CRM_Calendar_ExtensionUtil as E;
 
 /**
@@ -8,8 +9,7 @@ use CRM_Calendar_ExtensionUtil as E;
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_config
  */
-function calendar_civicrm_config(&$config)
-{
+function calendar_civicrm_config(&$config) {
   _calendar_civix_civicrm_config($config);
 }
 
@@ -18,8 +18,7 @@ function calendar_civicrm_config(&$config)
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_xmlMenu
  */
-function calendar_civicrm_xmlMenu(&$files)
-{
+function calendar_civicrm_xmlMenu(&$files) {
   _calendar_civix_civicrm_xmlMenu($files);
 }
 
@@ -28,8 +27,7 @@ function calendar_civicrm_xmlMenu(&$files)
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_install
  */
-function calendar_civicrm_install()
-{
+function calendar_civicrm_install() {
   _calendar_civix_civicrm_install();
 }
 
@@ -38,8 +36,7 @@ function calendar_civicrm_install()
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_postInstall
  */
-function calendar_civicrm_postInstall()
-{
+function calendar_civicrm_postInstall() {
   _calendar_civix_civicrm_postInstall();
 }
 
@@ -48,8 +45,7 @@ function calendar_civicrm_postInstall()
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_uninstall
  */
-function calendar_civicrm_uninstall()
-{
+function calendar_civicrm_uninstall() {
   _calendar_civix_civicrm_uninstall();
 }
 
@@ -58,8 +54,7 @@ function calendar_civicrm_uninstall()
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_enable
  */
-function calendar_civicrm_enable()
-{
+function calendar_civicrm_enable() {
   _calendar_civix_civicrm_enable();
 }
 
@@ -68,8 +63,7 @@ function calendar_civicrm_enable()
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_disable
  */
-function calendar_civicrm_disable()
-{
+function calendar_civicrm_disable() {
   _calendar_civix_civicrm_disable();
 }
 
@@ -78,8 +72,7 @@ function calendar_civicrm_disable()
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_upgrade
  */
-function calendar_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL)
-{
+function calendar_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
   return _calendar_civix_civicrm_upgrade($op, $queue);
 }
 
@@ -91,8 +84,7 @@ function calendar_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL)
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_managed
  */
-function calendar_civicrm_managed(&$entities)
-{
+function calendar_civicrm_managed(&$entities) {
   _calendar_civix_civicrm_managed($entities);
 }
 
@@ -105,8 +97,7 @@ function calendar_civicrm_managed(&$entities)
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_caseTypes
  */
-function calendar_civicrm_caseTypes(&$caseTypes)
-{
+function calendar_civicrm_caseTypes(&$caseTypes) {
   _calendar_civix_civicrm_caseTypes($caseTypes);
 }
 
@@ -120,8 +111,7 @@ function calendar_civicrm_caseTypes(&$caseTypes)
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_angularModules
  */
-function calendar_civicrm_angularModules(&$angularModules)
-{
+function calendar_civicrm_angularModules(&$angularModules) {
   _calendar_civix_civicrm_angularModules($angularModules);
 }
 
@@ -130,30 +120,29 @@ function calendar_civicrm_angularModules(&$angularModules)
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_alterSettingsFolders
  */
-function calendar_civicrm_alterSettingsFolders(&$metaDataFolders = NULL)
-{
+function calendar_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
   _calendar_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
 
 /**
- * Implementatio of hook__civicrm_tabs
+ * Implementation of hook_civicrm_tabs
+ *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_tabs
  */
-function calendar_civicrm_tabs(&$allTabs, $contactID = NULL)
-{
+function calendar_civicrm_tabs(&$allTabs, $contactID = NULL) {
   if ($contactID) {
-    $url = CRM_Utils_System::url('civicrm/calendar', 'reset=1&cid=' . $contactID);
+    $url = CRM_Utils_System::url('civicrm/calendar', 'cid=' . $contactID);
   }
   else {
     $url = CRM_Utils_System::url('civicrm/calendar', '');
   }
 
-  $newTab = array(
+  $newTab = [
     'id' => 'calendar',
     'url' => $url,
     'title' => ts('Calendar'),
-    'weight' => 15
-  );
+    'weight' => 15,
+  ];
 
   array_push($allTabs, $newTab);
 
@@ -167,37 +156,57 @@ function calendar_civicrm_tabs(&$allTabs, $contactID = NULL)
  *
  */
 function calendar_civicrm_navigationMenu(&$menu) {
-  $item[] =  array (
-    'name'       => 'Calendar Settings',
-    'url'        => 'civicrm/admin/calendar',
+  $item[] = [
+    'name' => 'Calendar Settings',
+    'url' => 'civicrm/admin/calendar',
     'permission' => 'administer CiviCRM',
-    'operator'   => NULL,
-    'separator'  => NULL,
-  );
+    'operator' => NULL,
+    'separator' => NULL,
+  ];
   _calendar_civix_insert_navigation_menu($menu, 'Administer/Customize Data and Screens', $item[0]);
 }
 
-function calendar_civicrm_dashboard($contactID, &$contentPlacement)
-{
-    $session = CRM_Core_Session::singleton();
-    $contactID = $session->get('userID');
-    
-    $isOnDashboard = CRM_Core_DAO::singleValueQuery("
-        SELECT count(*) FROM civicrm_dashboard
-        WHERE name='calendar' and is_active=1 and domain_id in (select id from civicrm_domain where name = 'Default Domain Name')
-      ");
-    if($isOnDashboard){
-        _calendar_civix_addJSCss();
-    }
-    return '';
-} 
+/**
+ * @param $contactID
+ * @param $contentPlacement
+ *
+ * @return string
+ */
+function calendar_civicrm_dashboard($contactID, &$contentPlacement) {
+  $isOnDashboard = CRM_Core_DAO::singleValueQuery('
+        SELECT count(*) 
+        FROM civicrm_dashboard
+        WHERE `name` = "calendar" 
+        AND is_active=1 
+        AND domain_id IN (select MIN(id) from civicrm_domain)
+      ');
 
-function  _calendar_civix_addJSCss()
-{
-    CRM_Core_Resources::singleton()->addStyleFile('com.agiliway.civicalendar', 'css/fullcalendar.min.css', 200, 'html-header');
-    CRM_Core_Resources::singleton()->addStyleFile('com.agiliway.civicalendar', 'css/calendar.css', 201, 'html-header');
-    CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'js/moment.min.js', 200, 'html-header');
-    CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'js/fullcalendar.min.js', 201, 'html-header');
-    CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'js/locale-all.js', 201, 'html-header');
-    CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'locale/' . CRM_Calendar_Settings::getValue('locale') . '.js', 202, 'html-header');
+  if ($isOnDashboard) {
+    _calendar_civix_addJSCss();
+  }
+
+  return '';
+}
+
+/**
+ * Adding css and js files to page body
+ */
+function _calendar_civix_addJSCss() {
+  CRM_Core_Resources::singleton()
+    ->addStyleFile('com.agiliway.civicalendar', 'css/fullcalendar.min.css', 200, 'html-header');
+  CRM_Core_Resources::singleton()
+    ->addStyleFile('com.agiliway.civicalendar', 'css/calendar.css', 201, 'html-header');
+
+  CRM_Core_Resources::singleton()
+    ->addScriptFile('com.agiliway.civicalendar', 'js/tooltip.js', 199, 'html-header');
+  CRM_Core_Resources::singleton()
+    ->addScriptFile('com.agiliway.civicalendar', 'js/popover.js', 200, 'html-header');
+  CRM_Core_Resources::singleton()
+    ->addScriptFile('com.agiliway.civicalendar', 'js/moment.min.js', 200, 'html-header');
+  CRM_Core_Resources::singleton()
+    ->addScriptFile('com.agiliway.civicalendar', 'js/fullcalendar.min.js', 201, 'html-header');
+  CRM_Core_Resources::singleton()
+    ->addScriptFile('com.agiliway.civicalendar', 'js/locale-all.js', 201, 'html-header');
+  CRM_Core_Resources::singleton()
+    ->addScriptFile('com.agiliway.civicalendar', 'locale/' . CRM_Calendar_Settings::getValue('locale') . '.js', 202, 'html-header');
 }

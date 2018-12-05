@@ -44,22 +44,22 @@ class CRM_Calendar_Upgrader_Base {
   static public function instance() {
     if (!self::$instance) {
       // FIXME auto-generate
-      self::$instance = new CRM_Calendar_Upgrader(
-        'com.agiliway.civicalendar',
-        realpath(__DIR__ . '/../../../')
-      );
+      self::$instance = new CRM_Calendar_Upgrader('com.agiliway.civicalendar', realpath(__DIR__ . '/../../../'));
     }
+
     return self::$instance;
   }
 
   /**
-   * Adapter that lets you add normal (non-static) member functions to the queue.
+   * Adapter that lets you add normal (non-static) member functions to the
+   * queue.
    *
    * Note: Each upgrader instance should only be associated with one
    * task-context; otherwise, this will be non-reentrant.
    *
    * @code
-   * CRM_Calendar_Upgrader_Base::_queueAdapter($ctx, 'methodName', 'arg1', 'arg2');
+   * CRM_Calendar_Upgrader_Base::_queueAdapter($ctx, 'methodName', 'arg1',
+   *   'arg2');
    * @endcode
    */
   static public function _queueAdapter() {
@@ -68,9 +68,16 @@ class CRM_Calendar_Upgrader_Base {
     $instance->ctx = array_shift($args);
     $instance->queue = $instance->ctx->queue;
     $method = array_shift($args);
-    return call_user_func_array(array($instance, $method), $args);
+
+    return call_user_func_array([$instance, $method], $args);
   }
 
+  /**
+   * CRM_Calendar_Upgrader_Base constructor.
+   *
+   * @param $extensionName
+   * @param $extensionDir
+   */
   public function __construct($extensionName, $extensionDir) {
     $this->extensionName = $extensionName;
     $this->extensionDir = $extensionDir;
@@ -81,39 +88,43 @@ class CRM_Calendar_Upgrader_Base {
   /**
    * Run a CustomData file.
    *
-   * @param string $relativePath the CustomData XML file path (relative to this extension's dir)
+   * @param string $relativePath the CustomData XML file path (relative to this
+   *   extension's dir)
+   *
    * @return bool
    */
   public function executeCustomDataFile($relativePath) {
     $xml_file = $this->extensionDir . '/' . $relativePath;
+
     return $this->executeCustomDataFileByAbsPath($xml_file);
   }
 
   /**
    * Run a CustomData file
    *
-   * @param string $xml_file  the CustomData XML file path (absolute path)
+   * @param string $xml_file the CustomData XML file path (absolute path)
    *
    * @return bool
    */
   protected static function executeCustomDataFileByAbsPath($xml_file) {
     $import = new CRM_Utils_Migrate_Import();
+
     $import->run($xml_file);
+
     return TRUE;
   }
 
   /**
    * Run a SQL file.
    *
-   * @param string $relativePath the SQL file path (relative to this extension's dir)
+   * @param string $relativePath the SQL file path (relative to this
+   *   extension's dir)
    *
    * @return bool
    */
   public function executeSqlFile($relativePath) {
-    CRM_Utils_File::sourceSQLFile(
-      CIVICRM_DSN,
-      $this->extensionDir . DIRECTORY_SEPARATOR . $relativePath
-    );
+    CRM_Utils_File::sourceSQLFile(CIVICRM_DSN, $this->extensionDir . DIRECTORY_SEPARATOR . $relativePath);
+
     return TRUE;
   }
 
@@ -121,6 +132,7 @@ class CRM_Calendar_Upgrader_Base {
    * @param string $tplFile
    *   The SQL file path (relative to this extension's dir).
    *   Ex: "sql/mydata.mysql.tpl".
+   *
    * @return bool
    */
   public function executeSqlTemplate($tplFile) {
@@ -129,10 +141,11 @@ class CRM_Calendar_Upgrader_Base {
 
     $tplFile = CRM_Utils_File::isAbsolute($tplFile) ? $tplFile : $this->extensionDir . DIRECTORY_SEPARATOR . $tplFile;
     $smarty = CRM_Core_Smarty::singleton();
+
     $smarty->assign('domainID', CRM_Core_Config::domainID());
-    CRM_Utils_File::sourceSQLFile(
-      CIVICRM_DSN, $smarty->fetch($tplFile), NULL, TRUE
-    );
+
+    CRM_Utils_File::sourceSQLFile(CIVICRM_DSN, $smarty->fetch($tplFile), NULL, TRUE);
+
     return TRUE;
   }
 
@@ -143,9 +156,10 @@ class CRM_Calendar_Upgrader_Base {
    * provides syntatic sugar for queueing several tasks that
    * run different queries
    */
-  public function executeSql($query, $params = array()) {
+  public function executeSql($query, $params = []) {
     // FIXME verify that we raise an exception on error
     CRM_Core_DAO::executeQuery($query, $params);
+
     return TRUE;
   }
 
@@ -161,12 +175,13 @@ class CRM_Calendar_Upgrader_Base {
   public function addTask($title) {
     $args = func_get_args();
     $title = array_shift($args);
-    $task = new CRM_Queue_Task(
-      array(get_class($this), '_queueAdapter'),
-      $args,
-      $title
-    );
-    return $this->queue->createItem($task, array('weight' => -1));
+
+    $task = new CRM_Queue_Task([
+      get_class($this),
+      '_queueAdapter',
+    ], $args, $title);
+
+    return $this->queue->createItem($task, ['weight' => -1]);
   }
 
   // ******** Revision-tracking helpers ********
@@ -183,6 +198,7 @@ class CRM_Calendar_Upgrader_Base {
     if (empty($revisions)) {
       return FALSE;
     }
+
     if (empty($currentRevision)) {
       return TRUE;
     }
@@ -197,27 +213,28 @@ class CRM_Calendar_Upgrader_Base {
     $this->queue = $queue;
 
     $currentRevision = $this->getCurrentRevision();
+
     foreach ($this->getRevisions() as $revision) {
       if ($revision > $currentRevision) {
-        $title = ts('Upgrade %1 to revision %2', array(
+        $title = ts('Upgrade %1 to revision %2', [
           1 => $this->extensionName,
           2 => $revision,
-        ));
+        ]);
 
         // note: don't use addTask() because it sets weight=-1
 
-        $task = new CRM_Queue_Task(
-          array(get_class($this), '_queueAdapter'),
-          array('upgrade_' . $revision),
-          $title
-        );
+        $task = new CRM_Queue_Task([
+          get_class($this),
+          '_queueAdapter',
+        ], ['upgrade_' . $revision], $title);
+
         $this->queue->createItem($task);
 
-        $task = new CRM_Queue_Task(
-          array(get_class($this), '_queueAdapter'),
-          array('setCurrentRevision', $revision),
-          $title
-        );
+        $task = new CRM_Queue_Task([
+          get_class($this),
+          '_queueAdapter',
+        ], ['setCurrentRevision', $revision], $title);
+
         $this->queue->createItem($task);
       }
     }
@@ -230,50 +247,72 @@ class CRM_Calendar_Upgrader_Base {
    */
   public function getRevisions() {
     if (!is_array($this->revisions)) {
-      $this->revisions = array();
+      $this->revisions = [];
 
       $clazz = new ReflectionClass(get_class($this));
       $methods = $clazz->getMethods();
+
       foreach ($methods as $method) {
         if (preg_match('/^upgrade_(.*)/', $method->name, $matches)) {
           $this->revisions[] = $matches[1];
         }
       }
+
       sort($this->revisions, SORT_NUMERIC);
     }
 
     return $this->revisions;
   }
 
+  /**
+   * @return mixed|string
+   */
   public function getCurrentRevision() {
     $revision = CRM_Core_BAO_Extension::getSchemaVersion($this->extensionName);
+
     if (!$revision) {
       $revision = $this->getCurrentRevisionDeprecated();
     }
+
     return $revision;
   }
 
+  /**
+   * @return mixed
+   */
   private function getCurrentRevisionDeprecated() {
     $key = $this->extensionName . ':version';
+
     if ($revision = CRM_Core_BAO_Setting::getItem('Extension', $key)) {
       $this->revisionStorageIsDeprecated = TRUE;
     }
+
     return $revision;
   }
 
+  /**
+   * @param $revision
+   *
+   * @return bool
+   */
   public function setCurrentRevision($revision) {
     CRM_Core_BAO_Extension::setSchemaVersion($this->extensionName, $revision);
     // clean up legacy schema version store (CRM-19252)
     $this->deleteDeprecatedRevision();
+
     return TRUE;
   }
 
+  /**
+   * deleteDeprecatedRevision
+   */
   private function deleteDeprecatedRevision() {
     if ($this->revisionStorageIsDeprecated) {
       $setting = new CRM_Core_BAO_Setting();
       $setting->name = $this->extensionName . ':version';
       $setting->delete();
-      CRM_Core_Error::debug_log_message("Migrated extension schema revision ID for {$this->extensionName} from civicrm_setting (deprecated) to civicrm_extension.\n");
+
+      CRM_Core_Error::debug_log_message('Migrated extension schema revision ID for ' . $this->extensionName . ' from civicrm_setting (deprecated) to civicrm_extension.' . "\n");
     }
   }
 
@@ -284,24 +323,30 @@ class CRM_Calendar_Upgrader_Base {
    */
   public function onInstall() {
     $files = glob($this->extensionDir . '/sql/*_install.sql');
+
     if (is_array($files)) {
       foreach ($files as $file) {
         CRM_Utils_File::sourceSQLFile(CIVICRM_DSN, $file);
       }
     }
+
     $files = glob($this->extensionDir . '/sql/*_install.mysql.tpl');
+
     if (is_array($files)) {
       foreach ($files as $file) {
         $this->executeSqlTemplate($file);
       }
     }
+
     $files = glob($this->extensionDir . '/xml/*_install.xml');
+
     if (is_array($files)) {
       foreach ($files as $file) {
         $this->executeCustomDataFileByAbsPath($file);
       }
     }
-    if (is_callable(array($this, 'install'))) {
+
+    if (is_callable([$this, 'install'])) {
       $this->install();
     }
   }
@@ -311,10 +356,12 @@ class CRM_Calendar_Upgrader_Base {
    */
   public function onPostInstall() {
     $revisions = $this->getRevisions();
+
     if (!empty($revisions)) {
       $this->setCurrentRevision(max($revisions));
     }
-    if (is_callable(array($this, 'postInstall'))) {
+
+    if (is_callable([$this, 'postInstall'])) {
       $this->postInstall();
     }
   }
@@ -324,15 +371,19 @@ class CRM_Calendar_Upgrader_Base {
    */
   public function onUninstall() {
     $files = glob($this->extensionDir . '/sql/*_uninstall.mysql.tpl');
+
     if (is_array($files)) {
       foreach ($files as $file) {
         $this->executeSqlTemplate($file);
       }
     }
-    if (is_callable(array($this, 'uninstall'))) {
+
+    if (is_callable([$this, 'uninstall'])) {
       $this->uninstall();
     }
+
     $files = glob($this->extensionDir . '/sql/*_uninstall.sql');
+
     if (is_array($files)) {
       foreach ($files as $file) {
         CRM_Utils_File::sourceSQLFile(CIVICRM_DSN, $file);
@@ -345,7 +396,7 @@ class CRM_Calendar_Upgrader_Base {
    */
   public function onEnable() {
     // stub for possible future use
-    if (is_callable(array($this, 'enable'))) {
+    if (is_callable([$this, 'enable'])) {
       $this->enable();
     }
   }
@@ -355,15 +406,21 @@ class CRM_Calendar_Upgrader_Base {
    */
   public function onDisable() {
     // stub for possible future use
-    if (is_callable(array($this, 'disable'))) {
+    if (is_callable([$this, 'disable'])) {
       $this->disable();
     }
   }
 
+  /**
+   * @param $op
+   * @param \CRM_Queue_Queue|NULL $queue
+   *
+   * @return array|void
+   */
   public function onUpgrade($op, CRM_Queue_Queue $queue = NULL) {
     switch ($op) {
       case 'check':
-        return array($this->hasPendingRevisions());
+        return [$this->hasPendingRevisions()];
 
       case 'enqueue':
         return $this->enqueuePendingRevisions($queue);
@@ -371,5 +428,4 @@ class CRM_Calendar_Upgrader_Base {
       default:
     }
   }
-
 }

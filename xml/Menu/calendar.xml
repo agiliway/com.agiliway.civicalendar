@@ -1,29 +1,39 @@
 <?xml version="1.0"?>
 <menu>
-  <item>
-    <path>civicrm/calendar</path>
-    <page_callback>CRM_Calendar_Page_Calendar</page_callback>
-    <title>Calendar</title>
-    <access_arguments>access CiviCRM</access_arguments>
-  </item>
-  <item>
-    <path>civicrm/ajax/calendar</path>
-    <page_callback>CRM_Calendar_Page_AJAX::getContactEventCalendar</page_callback>
-    <title>AJAX</title>
-    <access_arguments>access CiviCRM</access_arguments>
-  </item>
-  <item>
-    <path>civicrm/admin/calendar</path>
-    <title>Calendar Settings</title>
-    <path_arguments>reset=1</path_arguments>
-    <page_callback>CRM_Calendar_Form_Settings</page_callback>
-    <access_arguments>administer CiviCRM</access_arguments>
-    <page_type>0</page_type>
-    <component>Contact</component>
-  </item>
-  <item>
-     <path>civicrm/dashlet/calendar</path>
-     <title>CiviCRM Calendar</title>
-     <page_callback>CRM_Dashlet_Page_Calendar</page_callback>
-  </item>
+    <item>
+        <path>civicrm/calendar</path>
+        <page_callback>CRM_Calendar_Form_Calendar</page_callback>
+        <title>Calendar</title>
+        <access_arguments>access CiviCRM</access_arguments>
+    </item>
+    <item>
+        <path>civicrm/ajax/calendar</path>
+        <page_callback>CRM_Calendar_Page_AJAX::getContactEvents</page_callback>
+        <title>AJAX</title>
+        <access_arguments>access CiviCRM</access_arguments>
+    </item>
+    <item>
+        <path>civicrm/ajax/calendar/overlaying</path>
+        <page_callback>CRM_Calendar_Page_AJAX::getContactEventOverlaying</page_callback>
+        <title>AJAX</title>
+        <access_arguments>access CiviCRM</access_arguments>
+    </item>
+    <item>
+        <path>civicrm/admin/calendar</path>
+        <title>Calendar Settings</title>
+        <page_callback>CRM_Calendar_Form_Settings</page_callback>
+        <access_arguments>administer CiviCRM</access_arguments>
+        <page_type>0</page_type>
+        <component>Contact</component>
+    </item>
+    <item>
+        <path>civicrm/dashlet/calendar</path>
+        <title>CiviCRM Calendar</title>
+        <page_callback>CRM_Dashlet_Page_Calendar</page_callback>
+    </item>
+    <item>
+        <path>civicrm/calendar/overlaying</path>
+        <access_arguments>access CiviCRM</access_arguments>
+        <page_callback>CRM_Calendar_Form_OverlayingCalendar</page_callback>
+    </item>
 </menu>
