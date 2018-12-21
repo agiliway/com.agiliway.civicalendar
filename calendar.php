@@ -207,6 +207,7 @@ function _calendar_civix_addJSCss() {
     ->addScriptFile('com.agiliway.civicalendar', 'js/fullcalendar.min.js', 201, 'html-header');
   CRM_Core_Resources::singleton()
     ->addScriptFile('com.agiliway.civicalendar', 'js/locale-all.js', 201, 'html-header');
-  CRM_Core_Resources::singleton()
-    ->addScriptFile('com.agiliway.civicalendar', 'locale/' . CRM_Calendar_Settings::getValue('locale') . '.js', 202, 'html-header');
+  // WIP - add locale js files
+  // CRM_Core_Resources::singleton()
+  //   ->addScriptFile('com.agiliway.civicalendar', 'locale/' . CRM_Calendar_Settings::getValue('locale') . '.js', 202, 'html-header');
 }
