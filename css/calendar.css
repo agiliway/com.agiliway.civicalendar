@@ -307,11 +307,6 @@ div.fc-widget-header > table th {
     margin-top: 10px;
 }
 
-.crm-form-multiselect, .crm-form-select {
-    min-width: 210px !important;
-    width: 210px !important;
-}
-
 /*bootstrap 3 popover*/
 .popover {
     position: absolute;
