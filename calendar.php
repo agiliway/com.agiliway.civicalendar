@@ -125,28 +125,22 @@ function calendar_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
 }
 
 /**
- * Implementation of hook_civicrm_tabs
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_tabs
+ * Implements hook_civicrm_tabset().
  */
-function calendar_civicrm_tabs(&$allTabs, $contactID = NULL) {
-  if ($contactID) {
-    $url = CRM_Utils_System::url('civicrm/calendar', 'cid=' . $contactID);
+function calendar_civicrm_tabset($path, &$tabs, $context) {
+  if ($path === 'civicrm/contact/view') {
+    $url = CRM_Utils_System::url('civicrm/calendar', ['cid' => $context['contact_id']]);
+
+    $tabs[] = [
+      'id' => 'calendar',
+      'url' => $url,
+      'title' => ts('Calendar'),
+      'weight' => 15,
+      'icon' => 'crm-i fa-calendar-check-o',
+    ];
+
+    _calendar_civix_addJSCss();
   }
-  else {
-    $url = CRM_Utils_System::url('civicrm/calendar', '');
-  }
-
-  $newTab = [
-    'id' => 'calendar',
-    'url' => $url,
-    'title' => ts('Calendar'),
-    'weight' => 15,
-  ];
-
-  array_push($allTabs, $newTab);
-
-  _calendar_civix_addJSCss();
 }
 
 /**
