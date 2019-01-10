@@ -86,4 +86,13 @@ class CRM_Calendar_Upgrader extends CRM_Calendar_Upgrader_Base {
     }
   }
 
+  /**
+   * Gets extension dir
+   *
+   * @return string
+   */
+  public function getExtensionDir() {
+    return $this->extensionDir;
+  }
+
 }
