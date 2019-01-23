@@ -1,0 +1,151 @@
+.tabsBlockContent table {
+    margin: 0 0 1em;
+}
+
+.tabsBlockContent tr {
+    background: none transparent;
+}
+
+.tabsBlockContent tbody {
+    border-top: none;
+}
+
+.crm-container .tabsBlockContent table th {
+    background: #fff;
+}
+
+.page-civicrm-contact-view:not([class*='page-civicrm-contact-view-']) #crm-container .tabsBlockContent div.crm-summary-contactname-block {
+    background: none;
+    color: unset;
+}
+
+.fc .fc-button-group .fc-button {
+    margin-right: 2px;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc th,
+.crm-container.ui-dialog .tabsBlockContent .fc-basic-view td.fc-week-number {
+    text-align: center;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-unthemed .fc-list-heading td,
+.crm-container.ui-dialog .tabsBlockContent .fc-unthemed tbody,
+.crm-container.ui-dialog .tabsBlockContent .fc-unthemed td,
+.crm-container.ui-dialog .tabsBlockContent .fc-unthemed th,
+.crm-container.ui-dialog .tabsBlockContent .fc-unthemed thead {
+    border-color: #ddd;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-unthemed .fc-list-heading td {
+    background: #eee;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-unthemed td.fc-today {
+    background: #fcf8e3 !important;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc td,
+.crm-container.ui-dialog .tabsBlockContent .fc th {
+    border-style: solid;
+    border-width: 1px;
+    padding: 0;
+    vertical-align: top;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc td.fc-today {
+    border-style: double;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-row table {
+    border-left: 0 hidden transparent;
+    border-right: 0 hidden transparent;
+    border-bottom: 0 hidden transparent;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-row:first-child table {
+    border-top: 0 hidden transparent;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-row .fc-bgevent-skeleton td,
+.crm-container.ui-dialog .tabsBlockContent .fc-row .fc-highlight-skeleton td {
+    border-color: transparent;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-row .fc-content-skeleton td,
+.crm-container.ui-dialog .tabsBlockContent .fc-row .fc-helper-skeleton td {
+    background: 0 0;
+    border-bottom: 0;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-row .fc-content-skeleton tbody td,
+.crm-container.ui-dialog .tabsBlockContent .fc-row .fc-helper-skeleton tbody td {
+    border-top: 0;
+}
+
+.crm-container.ui-dialog .tabsBlockContent tr:first-child>td>.fc-day-grid-event {
+    margin-top: 2px;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-basic-view th.fc-day-number,
+.crm-container.ui-dialog .tabsBlockContent .fc-basic-view th.fc-week-number {
+    padding: 0 2px;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .ui-widget td.fc-axis {
+    font-weight: 400;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-time-grid table {
+    border: 0 hidden transparent;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-time-grid .fc-slats td {
+    height: 1.5em;
+    border-bottom: 0;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-time-grid .fc-slats .fc-minor td {
+    border-top-style: dotted;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-list-table td {
+    border-width: 1px 0 0;
+    padding: 8px 14px;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-list-table tr:first-child td {
+    border-top-width: 0;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-list-heading td {
+    font-weight: 700;
+}
+
+.crm-container.ui-dialog .tabsBlockContent .fc-list-item:hover td {
+    background-color: #f5f5f5;
+}
+
+.crm-container.ui-dialog  .tabsBlockContent .fc-agendaWeek-view .fc-slats table tr,
+.crm-container.ui-dialog  .tabsBlockContent .fc-agendaDay-view .fc-slats table tr {
+    background: unset !important;
+}
+
+.crm-container.ui-dialog  .tabsBlockContent .fc-agendaWeek-view  td,
+.crm-container.ui-dialog  .tabsBlockContent .fc-agendaDay-view  td {
+    background: unset;
+}
+
+.tabsBlockContent .fc-icon-left-single-arrow:after,
+.tabsBlockContent .fc-icon-right-single-arrow:after {
+    top: 0;
+}
+
+.crm-container .tabsBlockContent .crm-accordion-body td>.select2-container,
+.crm-container .tabsBlockContent .crm-accordion-body td>.select2-container {
+    min-width: 212px;
+}
+
+.crm-container .ui-tabs .tabsBlockContent .crm-accordion-body td>.select2-container,
+.crm-container .ui-tabs .tabsBlockContent .crm-accordion-body td>.select2-container {
+    min-width: 138px;
+}

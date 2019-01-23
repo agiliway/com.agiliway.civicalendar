@@ -82,6 +82,8 @@ class CRM_Calendar_Common_Event {
 
     $query .= $whereCondition;
 
+    $query .= 'GROUP BY id';
+
     $dao = CRM_Core_DAO::executeQuery($query);
 
     while ($dao->fetch()) {

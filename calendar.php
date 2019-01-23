@@ -183,6 +183,50 @@ function calendar_civicrm_dashboard($contactID, &$contentPlacement) {
 }
 
 /**
+ * Implements hook_civicrm_buildForm().
+ *
+ * @param $formName
+ * @param $form
+ */
+function calendar_civicrm_buildForm($formName, &$form) {
+  if ($formName == 'CRM_Admin_Form_Options') {
+    if ($form->get('gName') == 'activity_type') {
+      $form->assign('gName', 'participant_status');
+      $form->add('select', 'visibility_id', ts('Visibility'), ['' => ts('- select -')] + CRM_Core_PseudoConstant::visibility());
+    }
+  }
+}
+
+
+
+/**
+ * Implements hook_civicrm_pageRun().
+ */
+function calendar_civicrm_pageRun(&$page) {
+  $pageName = $page->getVar('_name');
+
+  if ($pageName == 'CRM_Event_Page_EventInfo' && CRM_Core_Permission::check('register for events')) {
+    CRM_Core_Region::instance('page-body')->add([
+      'template' => CRM_Calendar_ExtensionUtil::path() . '/templates/CRM/Calendar/Page/Field/EventInfo.tpl'
+    ]);
+  }
+
+  if ($pageName == 'CRM_Admin_Page_Options' && $page::$_gName == 'activity_type') {
+    $page->assign('showVisibility', TRUE);
+  }
+}
+
+/**
+ * @param array $options
+ * @param string $groupName
+ */
+function calendar_civicrm_optionValues(&$options, $groupName) {
+  if ($groupName == 'visibility') {
+    $options = CRM_Core_OptionGroup::values('activity_visibility');
+  }
+}
+
+/**
  * Adding css and js files to page body
  */
 function _calendar_civix_addJSCss() {
@@ -213,5 +257,10 @@ function _calendar_civix_addJSCss() {
 
   if (!empty($localeFileName)) {
     CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'locale/' . $localeFileName . '.js', 202, 'html-header');
+  }
+
+  if (CRM_Calendar_Settings::isShoreditch()) {
+    CRM_Core_Resources::singleton()
+      ->addStyleFile('com.agiliway.civicalendar', 'css/shoreditch-fix.css', 199, 'html-header');
   }
 }

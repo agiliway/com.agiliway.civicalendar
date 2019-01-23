@@ -41,7 +41,7 @@ class CRM_Calendar_Common_Activity {
 
     $result = [];
 
-    $query = "
+    $query = '
       SELECT
         DISTINCT civicrm_activity.id AS id,
         civicrm_activity.`subject` AS title,
@@ -58,16 +58,21 @@ class CRM_Calendar_Common_Activity {
       
       JOIN `civicrm_activity_contact` ON civicrm_activity_contact.activity_id = civicrm_activity.id
       LEFT JOIN `civicrm_case_activity` ON civicrm_case_activity.activity_id = civicrm_activity.id
-      LEFT JOIN `civicrm_option_group` AS priority_group ON priority_group.name = 'priority'
+      LEFT JOIN `civicrm_option_group` AS priority_group ON priority_group.name = "priority"
       LEFT JOIN `civicrm_option_value` AS priority_value 
         ON (priority_value.option_group_id = priority_group.id AND civicrm_activity.priority_id = priority_value.value)
       
-      LEFT JOIN `civicrm_option_group` AS activity_type_group ON activity_type_group.name = 'activity_type'
+      LEFT JOIN `civicrm_option_group` AS activity_type_group ON activity_type_group.name = "activity_type"
       LEFT JOIN `civicrm_option_value` AS activity_type_value 
-      ON (activity_type_value.option_group_id = activity_type_group.id AND civicrm_activity.activity_type_id = activity_type_value.value )
+        ON (activity_type_value.option_group_id = activity_type_group.id AND civicrm_activity.activity_type_id = activity_type_value.value )
+      
+      LEFT JOIN `civicrm_option_group` AS activity_visibility_group ON activity_visibility_group.name = "activity_visibility"
+		  LEFT JOIN `civicrm_option_value` AS activity_visibility_value 
+      	ON (activity_visibility_value.option_group_id = activity_visibility_group.id AND activity_visibility_value.value = activity_type_value.visibility_id)
+      
       LEFT JOIN civicrm_contact AS contact
         ON contact.id = civicrm_activity_contact.contact_id
-    ";
+    ';
 
     if (!empty($activityRoleId) && $activityRoleId == ACTIVITY_ROLE_ASSIGNEE_ID) {
       $query .= ' 
@@ -135,6 +140,8 @@ class CRM_Calendar_Common_Activity {
     if (!empty($activityStatusId)) {
       $whereCondition .= ' AND civicrm_activity.status_id IN (' . implode(', ', $activityStatusId) . ') ';
     }
+
+    $whereCondition .= ' AND (activity_type_value.visibility_id IS NULL OR activity_visibility_value.name = "visibility")';
 
     $query .= $whereCondition;
     $dao = CRM_Core_DAO::executeQuery($query);

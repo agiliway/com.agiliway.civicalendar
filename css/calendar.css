@@ -67,13 +67,18 @@ div.crm-container label {
 }
 
 .styled_checkbox[type="checkbox"]:not(:checked) + span:after, .styled_checkbox[type="checkbox"]:checked + span:after {
-    content: '✔';
+    content: '';
     position: absolute;
-    top: .2em;
-    left: .3em;
+    top: 8px;
+    left: 9px;
     font-size: 1em;
     line-height: 0.8;
     transition: all .2s;
+    width: 3px;
+    height: 8px;
+    transform: translate(-50%,-50%) rotate(218deg);
+    border-top: 2px solid;
+    border-left: 2px solid;
 }
 
 .cases_checkbox[type="checkbox"]:not(:checked) + span:before, .cases_checkbox[type="checkbox"]:checked + span:before {
@@ -82,6 +87,7 @@ div.crm-container label {
 
 .cases_checkbox[type="checkbox"]:not(:checked) + span:after, .cases_checkbox[type="checkbox"]:checked + span:after {
     color: #ffa3a3;
+    border-color: #ffa3a3;
 }
 
 .activities_checkbox[type="checkbox"]:not(:checked) + span:before, .activities_checkbox[type="checkbox"]:checked + span:before {
@@ -90,6 +96,7 @@ div.crm-container label {
 
 .activities_checkbox[type="checkbox"]:not(:checked) + span:after, .activities_checkbox[type="checkbox"]:checked + span:after {
     color: #F7CF5D;
+    border-color: #F7CF5D;
 }
 
 .events_checkbox[type="checkbox"]:not(:checked) + span:before, .events_checkbox[type="checkbox"]:checked + span:before {
@@ -98,6 +105,7 @@ div.crm-container label {
 
 .events_checkbox[type="checkbox"]:not(:checked) + span:after, .events_checkbox[type="checkbox"]:checked + span:after {
     color: #35D0AE;
+    border-color: #35D0AE;
 }
 
 .add__ev__wrap {
@@ -121,6 +129,7 @@ div.crm-container label {
     display: inline-block;
     color: #43B05C;
     cursor: pointer;
+    height: 25px;
 }
 
 .add-button-open {

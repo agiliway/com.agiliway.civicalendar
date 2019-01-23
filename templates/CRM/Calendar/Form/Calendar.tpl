@@ -220,7 +220,7 @@
       header: {
         left: 'prev,next today',
         center: 'title',
-        right: 'month,agendaWeek,agendaDay'
+        right: 'month,agendaWeek,agendaDay,listMonth'
       },
       dayOfMonthFormat: '{/literal}{$settings.dayOfMonthFormat}{literal}',
       timeFormat: '{/literal}{$settings.timeFormat}{literal}',

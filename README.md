@@ -12,7 +12,10 @@ The Calendar allows:
 * **Adding** new activity directly from the Calendar
 * **Quickly previewing** the event info in one click​
 * Display Calendar on CiviCRM dashboard as **​dashlet**
+* Includes API for CiviCRM and CiviMobileApp integration
 * Supports 73 ​**locales**
+* **Quick viewing** event participants and registering new ones directly from previewing form
+*  Making activity types either hidden or visible 
 
 ## Screenshots
 
@@ -23,6 +26,10 @@ The Calendar allows:
 ![Screenshot](/img/calendar_view.png)
 ---
 ![Screenshot](/img/calendar_sharing.png)
+---
+![Screenshot](/img/calendar_register_participant.png)
+---
+![Screenshot](/img/calendar_hide_activity.png)
 
 
 ## Requirements
