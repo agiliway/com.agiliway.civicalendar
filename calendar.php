@@ -249,7 +249,7 @@ function _calendar_civix_addJSCss() {
   //customize calendar translate
   $localeFileName = false;
   if (!empty(CRM_Calendar_Settings::getValue('locale'))) {
-    $filename = (CRM_Calendar_Upgrader::instance())->getExtensionDir() . '/locale/' . CRM_Calendar_Settings::getValue('locale') . '.js';
+    $filename = CRM_Calendar_Upgrader::instance()->getExtensionDir() . '/locale/' . CRM_Calendar_Settings::getValue('locale') . '.js';
     if (file_exists($filename)) {
       $localeFileName = CRM_Calendar_Settings::getValue('locale');
     }
