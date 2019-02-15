@@ -33,12 +33,14 @@ class CRM_Calendar_Common_Activity {
    * @throws \CRM_Core_Exception
    */
   public static function getActivities($contactIds, $params, $fields) {
+    $settings = CRM_Calendar_Settings::get([
+      'hideactivitytypes',
+    ]);
 
     $activityRoleId = CRM_Utils_Request::retrieve('activityRoleId', 'String');
     $activityStatusId = CRM_Utils_Request::retrieve('activityStatusId', 'String');
     $activityTypeId = CRM_Utils_Request::retrieve('activityTypeId', 'String');
     $imagePath = CRM_Calendar_Common_Handler::getImagePath();
-
     $result = [];
 
     $query = '
@@ -133,6 +135,9 @@ class CRM_Calendar_Common_Activity {
       $whereCondition .= ' AND focus_or_target_role.contact_id IS NOT NULL';
     }
 
+    if (isset($settings['hideactivitytypes']) && is_array($settings['hideactivitytypes'])) {
+      $whereCondition .= ' AND civicrm_activity.activity_type_id NOT IN (' . implode(', ', $settings['hideactivitytypes']) . ') ';
+    }
     if (!empty($activityTypeId)) {
       $whereCondition .= ' AND civicrm_activity.activity_type_id IN (' . implode(', ', $activityTypeId) . ') ';
     }

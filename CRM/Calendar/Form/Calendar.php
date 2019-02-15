@@ -73,6 +73,9 @@ class CRM_Calendar_Form_Calendar extends CRM_Core_Form {
    * Build the form object.
    */
   public function buildQuickForm() {
+    $settings = CRM_Calendar_Settings::get([
+      'hideactivitytypes',
+    ]);
 
     if (in_array('CiviEvent', $this->enabledComponents)) {
       $eventTypes = CRM_Event_PseudoConstant::eventType();
@@ -107,6 +110,12 @@ class CRM_Calendar_Form_Calendar extends CRM_Core_Form {
     }
 
     $activityTypes = CRM_Calendar_Common_Activity::getTypes();
+    // Filter out the hidden activities
+    foreach($activityTypes as $activityTypeId => $activityType) {
+      if (in_array($activityTypeId, $settings['hideactivitytypes'])) {
+        unset($activityTypes[$activityTypeId]);
+      }
+    }
     $this->add('select', 'activity_type', ts('Activity Type'), $activityTypes, FALSE, [
       'class' => 'crm-select2',
       'multiple' => 'multiple',
