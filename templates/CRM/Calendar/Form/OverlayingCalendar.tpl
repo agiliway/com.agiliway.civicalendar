@@ -388,6 +388,7 @@
 
         tooltip += renderRowTooltip(event.title, '{/literal}{ts}Subject{/ts}{literal}');
         tooltip += renderRowTooltip(event.activityType, '{/literal}{ts}Type{/ts}{literal}');
+        tooltip += renderRowTooltip(event.targetContact, '{/literal}{ts}With{/ts}{literal}');
         tooltip += renderRowTooltip(event.priority, '{/literal}{ts}Priority{/ts}{literal}');
         tooltip += renderRowTooltip(event.participantRole, '{/literal}{ts}Participant Role{/ts}{literal}');
         tooltip += renderRowTooltip(event.eventType, '{/literal}{ts}Type{/ts}{literal}');

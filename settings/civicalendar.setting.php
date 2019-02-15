@@ -187,6 +187,18 @@ return [
       'zh-tw' => 'zh-tw',
     ],
   ],
+  'civicalendar_includecontactnamesintitle' => [
+    'group_name' => 'CiviCalendar Settings',
+    'group' => 'civicalendar',
+    'name' => 'civicalendar_includecontactnamesintitle',
+    'type' => 'String',
+    'add' => '4.7',
+    'is_domain' => 1,
+    'is_contact' => 0,
+    'default' => '0',
+    'description' => ts('Include contact names in title'),
+    'html_type' => 'Checkbox',
+  ],
 
   'civicalendar_hidepastevents' => [
     'group_name' => 'CiviCalendar Settings',

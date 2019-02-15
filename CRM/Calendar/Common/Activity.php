@@ -33,6 +33,9 @@ class CRM_Calendar_Common_Activity {
    * @throws \CRM_Core_Exception
    */
   public static function getActivities($contactIds, $params, $fields) {
+    $settings = CRM_Calendar_Settings::get([
+      'includecontactnamesintitle',
+    ]);
 
     $activityRoleId = CRM_Utils_Request::retrieve('activityRoleId', 'String');
     $activityStatusId = CRM_Utils_Request::retrieve('activityStatusId', 'String');
@@ -158,6 +161,7 @@ class CRM_Calendar_Common_Activity {
       $eventData['url'] = htmlspecialchars_decode(CRM_Utils_System::url('civicrm/activity', 'action=view&reset=1&cid=' . $dao->contact_id . '&id=' . $dao->id));
       $eventData['id'] = $dao->id;
       $eventData['assignContact'] = self::getAssignContactNameByActivityId($eventData['id']);
+      $eventData['targetContact'] = self::getTargetContactNameByActivityId($eventData['id']);
       $eventData['constraint'] = TRUE;
       $eventData['type'] = self::TYPE_ACTIVITIES;
       $eventData['contact_id'] = $dao->contact_id;
@@ -176,6 +180,14 @@ class CRM_Calendar_Common_Activity {
         }
         else {
           $eventData['image_url'] = $imagePath . 'Person.svg';
+        }
+      }
+
+      if ($settings['includecontactnamesintitle'] && $eventData['targetContact']) {
+        if (!empty($eventData['title'])) {
+          $eventData['title'] .= ' ('.$eventData['targetContact'].')';
+        } else {
+          $eventData['title'] = $eventData['targetContact'];
         }
       }
 
@@ -232,7 +244,7 @@ class CRM_Calendar_Common_Activity {
       ->select('DISTINCT civicrm_contact.display_name')
       ->join('civicrm_contact', 'LEFT JOIN civicrm_contact ON civicrm_activity_contact.contact_id = civicrm_contact.id')
       ->where("civicrm_activity_contact.activity_id = '" . $activityId . "'")
-      ->where("civicrm_activity_contact.record_type_id = '" . ACTIVITY_ROLE_ASSIGNEE_ID . "'")
+      ->where("civicrm_activity_contact.record_type_id = '" . self::ACTIVITY_ROLE_ASSIGNEE_ID . "'")
       ->toSQL();
 
     $dao = CRM_Core_DAO::executeQuery($query);
@@ -242,6 +254,32 @@ class CRM_Calendar_Common_Activity {
     }
 
     return $assignContactNames;
+  }
+
+  /**
+   * Get assign contact name by activity id
+   *
+   * @param $activityId
+   *
+   * @return string
+   */
+  public static function getTargetContactNameByActivityId($activityId) {
+    $targetContactNames = '';
+
+    $query = CRM_Utils_SQL_Select::from('civicrm_activity_contact')
+      ->select('DISTINCT civicrm_contact.display_name')
+      ->join('civicrm_contact', 'LEFT JOIN civicrm_contact ON civicrm_activity_contact.contact_id = civicrm_contact.id')
+      ->where("civicrm_activity_contact.activity_id = '" . $activityId . "'")
+      ->where("civicrm_activity_contact.record_type_id = '" . self::ACTIVITY_ROLE_FOCUS_OR_TARGET_ID . "'")
+      ->toSQL();
+
+    $dao = CRM_Core_DAO::executeQuery($query);
+
+    while ($dao->fetch()) {
+      $targetContactNames .= $dao->display_name . ', ';
+    }
+
+    return $targetContactNames;
   }
 
   /**
