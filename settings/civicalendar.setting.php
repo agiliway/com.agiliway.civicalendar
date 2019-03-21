@@ -9,6 +9,25 @@ return [
   'locale' => ['default' => CRM_Core_I18n::getLocale()],
   'height' => ['default' => '500'],
 
+  'civicalendar_hideactivitytypes' => [
+    'group_name' => 'CiviCalendar Settings',
+    'group' => 'civicalendar',
+    'name' => 'civicalendar_hideactivitytypes',
+    'type' => 'String',
+    'add' => '4.7',
+    'is_domain' => 1,
+    'is_contact' => 0,
+    'default' => [],
+    'description' => ts('Hide certain activity types from the calendar'),
+    'html_type' => 'Select',
+    'html_attributes' => [
+      'size' => 20,
+      'class' => 'crm-select2',
+    ],
+    'multiple' => true,
+    'pseudoconstant' => ['optionGroupName' => 'activity_type'],
+  ],
+
   'civicalendar_scrolltime' => [
     'group_name' => 'CiviCalendar Settings',
     'group' => 'civicalendar',
@@ -22,6 +41,7 @@ return [
     'html_type' => 'Select',
     'html_attributes' => [
       'size' => 20,
+      'class' => 'crm-select2',
     ],
     'option_values' => [
       '12:00:00' => '12:00 am',
@@ -51,6 +71,7 @@ return [
     'html_type' => 'Select',
     'html_attributes' => [
       'size' => 20,
+      'class' => 'crm-select2',
     ],
     'option_values' => [
       'month' => ts('month'),
@@ -89,6 +110,7 @@ return [
     'html_type' => 'Select',
     'html_attributes' => [
       'size' => 20,
+      'class' => 'crm-select2',
     ],
     'option_values' => [
       'h:mm' => ts('5:00'),
@@ -111,6 +133,7 @@ return [
     'html_type' => 'Select',
     'html_attributes' => [
       'size' => 20,
+      'class' => 'crm-select2',
     ],
     'option_values' => [
       'en' => 'en',

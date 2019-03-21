@@ -28,7 +28,19 @@ class CRM_Calendar_Form_Settings extends CRM_Core_Form {
             break;
 
           case 'Select':
-            $this->addElement('select', $name, ts($setting['description']), $setting['option_values']);
+            $options = array();
+            if (isset($setting['option_values'])) {
+              $options = $setting['option_values'];
+            } elseif (isset($setting['pseudoconstant'])) {
+              $options = civicrm_api3('Setting', 'getoptions', array(
+                'field' => 'civicalendar_'.$name,
+              ));
+              $options = $options['values'];
+            }
+            $select = $this->addElement('select', $name, ts($setting['description']), $options, $setting['html_attributes']);
+            if (isset($setting['multiple'])) {
+              $select->setMultiple($setting['multiple']);
+            }
             break;
         }
       }
