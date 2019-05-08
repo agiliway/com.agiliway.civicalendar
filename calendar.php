@@ -182,22 +182,6 @@ function calendar_civicrm_dashboard($contactID, &$contentPlacement) {
   return '';
 }
 
-/**
- * Implements hook_civicrm_buildForm().
- *
- * @param $formName
- * @param $form
- */
-function calendar_civicrm_buildForm($formName, &$form) {
-  if ($formName == 'CRM_Admin_Form_Options') {
-    if ($form->get('gName') == 'activity_type') {
-      $form->assign('gName', 'participant_status');
-      $form->add('select', 'visibility_id', ts('Visibility'), ['' => ts('- select -')] + CRM_Core_PseudoConstant::visibility());
-    }
-  }
-}
-
-
 
 /**
  * Implements hook_civicrm_pageRun().
@@ -210,21 +194,9 @@ function calendar_civicrm_pageRun(&$page) {
       'template' => CRM_Calendar_ExtensionUtil::path() . '/templates/CRM/Calendar/Page/Field/EventInfo.tpl'
     ]);
   }
-
-  if ($pageName == 'CRM_Admin_Page_Options' && $page::$_gName == 'activity_type') {
-    $page->assign('showVisibility', TRUE);
-  }
 }
 
-/**
- * @param array $options
- * @param string $groupName
- */
-function calendar_civicrm_optionValues(&$options, $groupName) {
-  if ($groupName == 'visibility') {
-    $options = CRM_Core_OptionGroup::values('activity_visibility');
-  }
-}
+//visibility_id
 
 /**
  * Adding css and js files to page body

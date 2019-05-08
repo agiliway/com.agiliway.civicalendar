@@ -35,7 +35,7 @@ class CRM_Calendar_Common_Activity {
   public static function getActivities($contactIds, $params, $fields) {
     $settings = CRM_Calendar_Settings::get([
       'includecontactnamesintitle',
-      'hideactivitytypes',
+      'activitytypes',
     ]);
 
     $activityRoleId = CRM_Utils_Request::retrieve('activityRoleId', 'String');
@@ -68,11 +68,7 @@ class CRM_Calendar_Common_Activity {
       LEFT JOIN `civicrm_option_group` AS activity_type_group ON activity_type_group.name = "activity_type"
       LEFT JOIN `civicrm_option_value` AS activity_type_value 
         ON (activity_type_value.option_group_id = activity_type_group.id AND civicrm_activity.activity_type_id = activity_type_value.value )
-      
-      LEFT JOIN `civicrm_option_group` AS activity_visibility_group ON activity_visibility_group.name = "activity_visibility"
-		  LEFT JOIN `civicrm_option_value` AS activity_visibility_value 
-      	ON (activity_visibility_value.option_group_id = activity_visibility_group.id AND activity_visibility_value.value = activity_type_value.visibility_id)
-      
+
       LEFT JOIN civicrm_contact AS contact
         ON contact.id = civicrm_activity_contact.contact_id
     ';
@@ -136,8 +132,8 @@ class CRM_Calendar_Common_Activity {
       $whereCondition .= ' AND focus_or_target_role.contact_id IS NOT NULL';
     }
 
-    if (isset($settings['hideactivitytypes']) && is_array($settings['hideactivitytypes'])) {
-      $whereCondition .= ' AND civicrm_activity.activity_type_id NOT IN (' . implode(', ', $settings['hideactivitytypes']) . ') ';
+    if (!empty($settings['activitytypes']) && is_array($settings['activitytypes'])) {
+      $whereCondition .= ' AND civicrm_activity.activity_type_id IN (' . implode(', ', $settings['activitytypes']) . ') ';
     }
     if (!empty($activityTypeId)) {
       $whereCondition .= ' AND civicrm_activity.activity_type_id IN (' . implode(', ', $activityTypeId) . ') ';
@@ -146,8 +142,6 @@ class CRM_Calendar_Common_Activity {
     if (!empty($activityStatusId)) {
       $whereCondition .= ' AND civicrm_activity.status_id IN (' . implode(', ', $activityStatusId) . ') ';
     }
-
-    $whereCondition .= ' AND (activity_type_value.visibility_id IS NULL OR activity_visibility_value.name = "visibility")';
 
     $query .= $whereCondition;
     $dao = CRM_Core_DAO::executeQuery($query);
