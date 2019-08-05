@@ -9,16 +9,16 @@ return [
   'locale' => ['default' => CRM_Core_I18n::getLocale()],
   'height' => ['default' => '500'],
 
-  'civicalendar_hideactivitytypes' => [
+  'civicalendar_activitytypes' => [
     'group_name' => 'CiviCalendar Settings',
     'group' => 'civicalendar',
-    'name' => 'civicalendar_hideactivitytypes',
+    'name' => 'civicalendar_activitytypes',
     'type' => 'String',
     'add' => '4.7',
     'is_domain' => 1,
     'is_contact' => 0,
     'default' => [],
-    'description' => ts('Hide certain activity types from the calendar'),
+    'description' => ts('Shows certain activity types on the calendar'),
     'html_type' => 'Select',
     'html_attributes' => [
       'size' => 20,
