@@ -16,7 +16,7 @@
   </urls>
   <releaseDate>2019-12-10</releaseDate>
   <version>3.4.0</version>
-  <develStage>alpha</develStage>
+  <develStage>stable</develStage>
   <compatibility>
     <ver>4.7</ver>
   </compatibility>
