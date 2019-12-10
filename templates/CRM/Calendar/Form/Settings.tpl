@@ -21,3 +21,13 @@
     {include file="CRM/common/formButtons.tpl" location="bottom"}
   </div>
 </div>
+
+{literal}
+  <script type="text/javascript">
+    CRM.$(function ($) {
+      $("#_qf_Settings_submit-bottom").click(function(){
+        localStorage.removeItem('dashboard');
+      });
+    });
+  </script>
+{/literal}

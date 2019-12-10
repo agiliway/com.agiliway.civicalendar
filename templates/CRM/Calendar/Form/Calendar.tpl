@@ -222,7 +222,7 @@
         center: 'title',
         right: 'month,agendaWeek,agendaDay,listMonth'
       },
-      dayOfMonthFormat: '{/literal}{$settings.dayOfMonthFormat}{literal}',
+      dayOfMonthFormat: 'ddd DD',
       timeFormat: '{/literal}{$settings.timeFormat}{literal}',
       scrollTime: '{/literal}{$settings.scrollTime}{literal}',
       minTime: '08:00:00',
@@ -239,8 +239,7 @@
       nowIndicator: true,
       displayEventTime: true,
       eventSources: '',
-      height: '{/literal}{$settings.height}{literal}',
-      contentHeight: ({/literal}{$settings.height}{literal}+40),
+
       eventClick: function (event, element) {
       },
       dayClick: function (event, element) {

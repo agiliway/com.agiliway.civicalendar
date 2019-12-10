@@ -1,7 +1,5 @@
 <?php
 
-use CRM_Calendar_ExtensionUtil as E;
-
 /**
  * Form controller class
  *
@@ -12,7 +10,7 @@ class CRM_Calendar_Form_Settings extends CRM_Core_Form {
   public function buildQuickForm() {
     parent::buildQuickForm();
 
-    CRM_Utils_System::setTitle(CRM_Calendar_Settings::TITLE . ' - ' . E::ts('Settings'));
+    CRM_Utils_System::setTitle(CRM_Calendar_Settings::TITLE . ' - ' . ts('Settings'));
 
     $settings = $this->getFormSettings();
 

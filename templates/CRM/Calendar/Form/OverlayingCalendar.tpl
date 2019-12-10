@@ -143,13 +143,14 @@
       }
 
       var events_calendar = CRM.$('#calendar').fullCalendar({
+        locale: '{/literal}{$language}{literal}',
         header: {
           left: 'prev,next today',
           center: 'title',
           right: 'month,agendaWeek,agendaDay'
         },
         dayOfMonthFormat: 'ddd DD',
-        timeFormat: 'HH:mm',
+        timeFormat: '{/literal}{$timeFormat}{literal}',
         height: '500',
         minTime: '08:00:00',
         maxTime: '20:00:00',
@@ -161,7 +162,7 @@
         },
         eventLimitText: "",
         lang: '{/literal}{$language}{literal}',
-        defaultView: 'month',
+        defaultView: '{/literal}{$default_view}{literal}',
         nowIndicator: true,
         displayEventTime: true,
         eventSources: '',
@@ -479,7 +480,7 @@
         }
 
         var contactHref = CRM.url('civicrm/contact/view', {reset: 1, cid: value.contact_id});
-``
+
         setImgClass(imageURL, value.contact_id);
 
         var piwStyle = ' style="width:32px;height:32px;"';

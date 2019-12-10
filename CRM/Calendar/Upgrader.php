@@ -5,6 +5,13 @@
  */
 class CRM_Calendar_Upgrader extends CRM_Calendar_Upgrader_Base {
 
+  public function upgrade_0001() {
+    $this->ctx->log->info('Applying update 0001');
+    CRM_Calendar_Utils_Extension::saveUpgradingSettings();
+
+    return TRUE;
+  }
+
   public function install() {
     $this->executeSqlFile('sql/install.sql');
     $this->addMenuItems();

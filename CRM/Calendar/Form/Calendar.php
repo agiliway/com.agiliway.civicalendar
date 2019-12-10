@@ -12,7 +12,7 @@ class CRM_Calendar_Form_Calendar extends CRM_Core_Form {
   function __construct($state = NULL, $action = CRM_Core_Action::NONE, $method = 'post', $name = NULL) {
     parent::__construct($state, $action, $method, $name);
 
-    $this->enabledComponents = CRM_Calendar_Common_Handler::getEnabledComponemnts();
+    $this->enabledComponents = CRM_Calendar_Utils_Extension::getEnabledComponents();
   }
 
   /**
@@ -27,21 +27,17 @@ class CRM_Calendar_Form_Calendar extends CRM_Core_Form {
     $tsLocale = CRM_Core_I18n::getLocale();
 
     $settings = CRM_Calendar_Settings::get([
-      'scrolltime',
-      'defaultview',
-      'dayofmonthformat',
-      'timeformat',
-      'hidepastevents',
+      'scroll_time',
+      'default_view',
+      'time_format',
+      'hide_past_events',
       'locale',
-      'height',
     ]);
-    $settings['scrollTime'] = $settings['scrolltime'];
-    $settings['defaultView'] = $settings['defaultview'];
-    $settings['dayOfMonthFormat'] = $settings['dayofmonthformat'];
-    $settings['timeFormat'] = $settings['timeformat'];
-    $settings['hidePastEvents'] = $settings['hidepastevents'];
+    $settings['scrollTime'] = $settings['scroll_time'];
+    $settings['defaultView'] = $settings['default_view'];
+    $settings['timeFormat'] = $settings['time_format'];
+    $settings['hidePastEvents'] = $settings['hide_past_events'];
     $settings['locale'] = $settings['locale'];
-    $settings['height'] = $settings['height'];
 
     $this->assign('settings', $settings);
 
@@ -73,9 +69,7 @@ class CRM_Calendar_Form_Calendar extends CRM_Core_Form {
    * Build the form object.
    */
   public function buildQuickForm() {
-    $settings = CRM_Calendar_Settings::get([
-      'activitytypes',
-    ]);
+    $settings = CRM_Calendar_Settings::get(['activity_types']);
 
     if (in_array('CiviEvent', $this->enabledComponents)) {
       $eventTypes = CRM_Event_PseudoConstant::eventType();
@@ -112,7 +106,7 @@ class CRM_Calendar_Form_Calendar extends CRM_Core_Form {
     $activityTypes = CRM_Calendar_Common_Activity::getTypes();
     // Filter out the hidden activities
     foreach($activityTypes as $activityTypeId => $activityType) {
-      if (in_array($activityTypeId, $settings['activitytypes'])) {
+      if (in_array($activityTypeId, $settings['activity_types'])) {
         unset($activityTypes[$activityTypeId]);
       }
     }
