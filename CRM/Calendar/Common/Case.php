@@ -21,11 +21,11 @@ class CRM_Calendar_Common_Case {
    *
    * @return array
    * @throws \CRM_Core_Exception
+   * @throws \CiviCRM_API3_Exception
    */
   public static function getCases($contactIds, $params, $fields) {
     $caseStatusId = CRM_Utils_Request::retrieve('caseStatusId', 'String');
     $caseTypeId = CRM_Utils_Request::retrieve('caseTypeId', 'String');
-    $imagePath = CRM_Calendar_Common_Handler::getImagePath();
 
     $result = [];
 
@@ -59,7 +59,7 @@ class CRM_Calendar_Common_Case {
       LEFT JOIN `civicrm_option_group` AS activity_type_group ON activity_type_group.name = 'activity_type'
       LEFT JOIN `civicrm_option_value` AS activity_type_value 
         ON (activity_type_value.option_group_id = activity_type_group.id AND civicrm_activity.activity_type_id = activity_type_value.value )
-      LEFT JOIN " . CRM_Case_DAO_CaseType::getTableName() . " AS case_type 
+      LEFT JOIN civicrm_case_type AS case_type 
         ON civicrm_case.case_type_id = case_type.id 
       LEFT JOIN civicrm_contact AS contact
         ON contact.id = civicrm_activity_contact.contact_id
@@ -70,12 +70,16 @@ class CRM_Calendar_Common_Case {
     $whereCondition = ' 
       AND civicrm_activity_contact.contact_id IN (' . implode(', ', $contactIds) . ') 
       AND civicrm_activity.is_deleted = 0 AND civicrm_case.is_deleted = 0
-      AND `activity_date_time` BETWEEN "' . $params['startDate'] . '" AND "' . $params['endDate'] . '"
+      AND `activity_date_time` BETWEEN %1 AND %2
       AND  civicrm_case_activity.activity_id IS NOT NULL
     ';
 
     if (!empty($caseTypeId)) {
       $whereCondition .= ' AND case_type.id IN (' . implode(', ', $caseTypeId) . ') ';
+    }
+
+    if ($params['hide_past_events'] == "1") {
+      $query .= ' AND civicrm_activity.activity_date_time > NOW()';
     }
 
     if (!empty($caseStatusId)) {
@@ -84,40 +88,33 @@ class CRM_Calendar_Common_Case {
 
     $query .= $whereCondition;
 
-    $dao = CRM_Core_DAO::executeQuery($query);
+    $caseCategories = CRM_Calendar_Settings::get(['case_types'])['case_types'];
+    if (!empty($caseCategories)) {
+      $query .= ' AND civicrm_case.case_type_id IN (' . implode(', ', $caseCategories) . ') ';
+    }
+
+    $dao = CRM_Core_DAO::executeQuery($query, [
+      1 => [ $params['startDate'], 'String' ],
+      2 => [ $params['endDate'], 'String' ]
+    ]);
 
     while ($dao->fetch()) {
-      $eventData = [];
+      $eventData = [
+        'url' => htmlspecialchars_decode(CRM_Utils_System::url('civicrm/case/activity/view', 'cid=' . $dao->contact_id . '&aid=' . $dao->activity_id)),
+        'id' => $dao->activity_id,
+        'case_title' => $dao->case_title,
+        'assignContact' => CRM_Calendar_Common_Activity::getAssignContactNameByActivityId($dao->activity_id),
+        'constraint' => TRUE,
+        'color' => self::CASE_COLOR,
+        'type' => self::TYPE_CASES,
+        'contact_id' => $dao->contact_id,
+        'display_name' => $dao->display_name,
+        'image_url' => (!empty($dao->image_URL)) ? $dao->image_URL : CRM_Calendar_Utils_Extension::getDefaultImageUrl($dao->contact_type),
+      ];
 
       foreach ($fields as $k) {
         if (isset($dao->$k)) {
           $eventData[$k] = $dao->$k;
-        }
-      }
-
-      $eventData['url'] = htmlspecialchars_decode(CRM_Utils_System::url('civicrm/case/activity/view', 'cid=' . $dao->contact_id . '&aid=' . $dao->activity_id));
-      $eventData['id'] = $dao->activity_id;
-      $eventData['case_title'] = $dao->case_title;
-      $eventData['case_id'] = $dao->case_id;
-      $eventData['assignContact'] = CRM_Calendar_Common_Activity::getAssignContactNameByActivityId($eventData['id']);
-      $eventData['constraint'] = TRUE;
-      $eventData['color'] = self::CASE_COLOR;
-      $eventData['type'] = self::TYPE_CASES;
-      $eventData['contact_id'] = $dao->contact_id;
-      $eventData['display_name'] = $dao->display_name;
-
-      if (!empty($dao->image_URL)) {
-        $eventData['image_url'] = $dao->image_URL;
-      }
-      else {
-        if ($dao->contact_type == 'Individual') {
-          $eventData['image_url'] = $imagePath . 'Person.svg';
-        }
-        elseif ($dao->contact_type == 'Organization') {
-          $eventData['image_url'] = $imagePath . 'Organization.svg';
-        }
-        else {
-          $eventData['image_url'] = $imagePath . 'Person.svg';
         }
       }
 

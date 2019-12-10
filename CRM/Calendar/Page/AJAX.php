@@ -19,13 +19,13 @@ class CRM_Calendar_Page_AJAX {
     }
 
     $params = [
-      'hidePastEvents' => CRM_Calendar_Settings::getValue('hidepastevents'),
+      'hide_past_events' => CRM_Calendar_Settings::getValue('hide_past_events'),
       'startDate' => gmdate('Y-m-d H:i:s', CRM_Utils_Request::retrieve('start', 'String')),
       'endDate' => gmdate('Y-m-d H:i:s', CRM_Utils_Request::retrieve('end', 'String')),
     ];
 
     $eventsHandler = new CRM_Calendar_Common_Handler($contactId, $params);
-    $events = $eventsHandler->getAllEventsOld();
+    $events = $eventsHandler->getAllEventsWeb();
 
     CRM_Utils_JSON::output($events);
   }
@@ -45,13 +45,13 @@ class CRM_Calendar_Page_AJAX {
     }
 
     $params = [
-      'hidePastEvents' => CRM_Calendar_Settings::getValue('hidepastevents'),
+      'hide_past_events' => CRM_Calendar_Settings::getValue('hide_past_events'),
       'startDate' => gmdate('Y-m-d H:i:s', CRM_Utils_Request::retrieve('start', 'String')),
       'endDate' => gmdate('Y-m-d H:i:s', CRM_Utils_Request::retrieve('end', 'String')),
     ];
 
     $eventsHandler = new CRM_Calendar_Common_Handler($contactId, $params);
-    $events = $eventsHandler->getAllEventsOld();
+    $events = $eventsHandler->getAllEventsWeb();
 
     CRM_Utils_JSON::output($events);
   }

@@ -60,9 +60,8 @@
   <div id="contactEventCalendar-{$context}"></div>
   <div
           data-div="settings"
-          data-dayOfMonthFormat="{$settings.dayOfMonthFormat}"
+          data-dayOfMonthFormat='ddd DD'
           data-defaultView="{$settings.defaultView}"
-          data-height="{$settings.height}"
           data-scrollTime="{$settings.scrollTime}"
           data-timeFormat="{$settings.timeFormat}"
           data-locale="{$settings.locale}"
@@ -122,7 +121,7 @@
           center: 'title',
           right: 'month,agendaWeek,agendaDay,listMonth'
         },
-        dayOfMonthFormat: settings.attr('data-dayOfMonthFormat'),
+        dayOfMonthFormat: 'ddd DD',
         height: settings.attr('data-height'),
         defaultView: settings.attr('data-defaultView'),
         scrollTime: settings.attr('data-scrollTime'),

@@ -2,20 +2,30 @@
 
 class CRM_Calendar_Form_OverlayingCalendar extends CRM_Core_Form {
 
+  /**
+   * Array of enabled components
+   *
+   * @var array|bool
+   */
+  public $enabledComponents;
+
   function __construct($state = NULL, $action = CRM_Core_Action::NONE, $method = 'post', $name = NULL) {
     parent::__construct($state, $action, $method, $name);
 
-    $this->enabledComponents = CRM_Calendar_Common_Handler::getEnabledComponemnts();
+    $this->enabledComponents = CRM_Calendar_Utils_Extension::getEnabledComponents();
   }
 
   /**
    * @throws \CRM_Core_Exception
    */
   public function preProcess() {
-    $tsLocale = CRM_Core_I18n::getLocale();
-
     if (!(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')) {
       _calendar_civix_addJSCss();
+    }
+
+    $defaultView = CRM_Calendar_Settings::get(['default_view'])['default_view'];
+    if ($defaultView == 'listMonth') {
+      $defaultView = 'month';
     }
 
     $this->_contactId = CRM_Utils_Request::retrieve('cid', 'Positive', $this);
@@ -35,8 +45,10 @@ class CRM_Calendar_Form_OverlayingCalendar extends CRM_Core_Form {
     }
 
     $this->assign('activityColor', CRM_Calendar_Common_Activity::ACTIVITY_COLOR);
-    $this->assign('language', $tsLocale);
-    $this->assign('imagePath', CRM_Calendar_Common_Handler::getImagePath());
+    $this->assign('language', CRM_Calendar_Settings::get(['locale'])['locale']);
+    $this->assign('timeFormat', CRM_Calendar_Settings::get(['time_format'])['time_format']);
+    $this->assign('default_view', $defaultView);
+    $this->assign('imagePath', CRM_Calendar_Utils_Extension::getImagePath());
 
     CRM_Utils_System::setTitle(ts('Calendar'));
   }

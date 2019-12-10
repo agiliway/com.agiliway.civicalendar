@@ -31,17 +31,17 @@ class CRM_Calendar_Common_Activity {
    *
    * @return array
    * @throws \CRM_Core_Exception
+   * @throws \CiviCRM_API3_Exception
    */
   public static function getActivities($contactIds, $params, $fields) {
     $settings = CRM_Calendar_Settings::get([
-      'includecontactnamesintitle',
-      'activitytypes',
+      'include_contact_names_in_title',
+      'activity_types',
     ]);
 
     $activityRoleId = CRM_Utils_Request::retrieve('activityRoleId', 'String');
     $activityStatusId = CRM_Utils_Request::retrieve('activityStatusId', 'String');
     $activityTypeId = CRM_Utils_Request::retrieve('activityTypeId', 'String');
-    $imagePath = CRM_Calendar_Common_Handler::getImagePath();
     $result = [];
 
     $query = '
@@ -73,38 +73,38 @@ class CRM_Calendar_Common_Activity {
         ON contact.id = civicrm_activity_contact.contact_id
     ';
 
-    if (!empty($activityRoleId) && $activityRoleId == ACTIVITY_ROLE_ASSIGNEE_ID) {
+    if (!empty($activityRoleId) && $activityRoleId == self::ACTIVITY_ROLE_ASSIGNEE_ID) {
       $query .= ' 
         LEFT JOIN `civicrm_activity_contact` AS assignee_role
         ON 
         (
           civicrm_activity.id = assignee_role.activity_id 
           AND assignee_role.contact_id IN (' . implode(', ', $contactIds) . ')
-          AND assignee_role.record_type_id = ' . ACTIVITY_ROLE_ASSIGNEE_ID . '
+          AND assignee_role.record_type_id = %1
         )
        ';
     }
 
-    if (!empty($activityRoleId) && $activityRoleId == ACTIVITY_ROLE_CREATOR_ID) {
+    if (!empty($activityRoleId) && $activityRoleId == self::ACTIVITY_ROLE_CREATOR_ID) {
       $query .= '
         LEFT JOIN `civicrm_activity_contact` AS creator_role
         ON 
         (
           civicrm_activity.id = creator_role.activity_id 
           AND creator_role.contact_id IN (' . implode(', ', $contactIds) . ')
-          AND creator_role.record_type_id = ' . ACTIVITY_ROLE_CREATOR_ID . '
+          AND creator_role.record_type_id = %2
         )
        ';
     }
 
-    if (!empty($activityRoleId) && $activityRoleId == ACTIVITY_ROLE_FOCUS_OR_TARGET_ID) {
+    if (!empty($activityRoleId) && $activityRoleId == self::ACTIVITY_ROLE_FOCUS_OR_TARGET_ID) {
       $query .= ' 
         LEFT JOIN `civicrm_activity_contact` AS focus_or_target_role
         ON 
         (
           civicrm_activity.id = focus_or_target_role.activity_id 
           AND focus_or_target_role.contact_id IN (' . implode(', ', $contactIds) . ')
-          AND focus_or_target_role.record_type_id = ' . ACTIVITY_ROLE_FOCUS_OR_TARGET_ID . '
+          AND focus_or_target_role.record_type_id = %3
         )
        ';
     }
@@ -115,28 +115,31 @@ class CRM_Calendar_Common_Activity {
       AND civicrm_activity_contact.contact_id IN (' . implode(', ', $contactIds) . ')
       AND civicrm_activity.is_deleted = 0
       AND civicrm_activity.activity_date_time 
-          BETWEEN "' . $params['startDate'] . '" 
-          AND "' . $params['endDate'] . '"
+          BETWEEN %4 AND %5
       AND  civicrm_case_activity.activity_id IS NULL
     ';
 
-    if (!empty($activityRoleId) && $activityRoleId == ACTIVITY_ROLE_ASSIGNEE_ID) {
+    if (!empty($activityRoleId) && $activityRoleId == self::ACTIVITY_ROLE_ASSIGNEE_ID) {
       $whereCondition .= ' AND assignee_role.contact_id IS NOT NULL';
     }
 
-    if (!empty($activityRoleId) && $activityRoleId == ACTIVITY_ROLE_CREATOR_ID) {
+    if (!empty($activityRoleId) && $activityRoleId == self::ACTIVITY_ROLE_CREATOR_ID) {
       $whereCondition .= ' AND creator_role.contact_id IS NOT NULL';
     }
 
-    if (!empty($activityRoleId) && $activityRoleId == ACTIVITY_ROLE_FOCUS_OR_TARGET_ID) {
+    if (!empty($activityRoleId) && $activityRoleId == self::ACTIVITY_ROLE_FOCUS_OR_TARGET_ID) {
       $whereCondition .= ' AND focus_or_target_role.contact_id IS NOT NULL';
     }
 
-    if (!empty($settings['activitytypes']) && is_array($settings['activitytypes'])) {
-      $whereCondition .= ' AND civicrm_activity.activity_type_id IN (' . implode(', ', $settings['activitytypes']) . ') ';
+    if (!empty($settings['activity_types']) && is_array($settings['activity_types'])) {
+      $whereCondition .= ' AND civicrm_activity.activity_type_id IN (' . implode(', ', $settings['activity_types']) . ') ';
     }
     if (!empty($activityTypeId)) {
       $whereCondition .= ' AND civicrm_activity.activity_type_id IN (' . implode(', ', $activityTypeId) . ') ';
+    }
+
+    if ($params['hide_past_events'] == "1") {
+      $query .= ' AND civicrm_activity.activity_date_time > NOW()';
     }
 
     if (!empty($activityStatusId)) {
@@ -144,10 +147,27 @@ class CRM_Calendar_Common_Activity {
     }
 
     $query .= $whereCondition;
-    $dao = CRM_Core_DAO::executeQuery($query);
+    $dao = CRM_Core_DAO::executeQuery($query, [
+      1 => [ self::ACTIVITY_ROLE_ASSIGNEE_ID, 'String' ],
+      2 => [ self::ACTIVITY_ROLE_CREATOR_ID, 'String' ],
+      3 => [ self::ACTIVITY_ROLE_FOCUS_OR_TARGET_ID, 'String' ],
+      4 => [ $params['startDate'], 'String' ],
+      5 => [ $params['endDate'], 'String' ],
+    ]);
 
     while ($dao->fetch()) {
-      $eventData = [];
+      $eventData = [
+        'url' => htmlspecialchars_decode(CRM_Utils_System::url('civicrm/activity', 'action=view&reset=1&cid=' . $dao->contact_id . '&id=' . $dao->id)),
+        'id' => $dao->id,
+        'assignContact' => self::getAssignContactNameByActivityId($dao->id),
+        'targetContact' => self::getTargetContactNameByActivityId($dao->id),
+        'constraint' => TRUE,
+        'type' => self::TYPE_ACTIVITIES,
+        'contact_id' => $dao->contact_id,
+        'display_name' => $dao->display_name,
+        'color' => self::ACTIVITY_COLOR,
+        'image_url' => (!empty($dao->image_URL)) ? $dao->image_URL : CRM_Calendar_Utils_Extension::getDefaultImageUrl($dao->contact_type),
+      ];
 
       foreach ($fields as $k) {
         if (isset($dao->$k)) {
@@ -155,32 +175,7 @@ class CRM_Calendar_Common_Activity {
         }
       }
 
-      $eventData['url'] = htmlspecialchars_decode(CRM_Utils_System::url('civicrm/activity', 'action=view&reset=1&cid=' . $dao->contact_id . '&id=' . $dao->id));
-      $eventData['id'] = $dao->id;
-      $eventData['assignContact'] = self::getAssignContactNameByActivityId($eventData['id']);
-      $eventData['targetContact'] = self::getTargetContactNameByActivityId($eventData['id']);
-      $eventData['constraint'] = TRUE;
-      $eventData['type'] = self::TYPE_ACTIVITIES;
-      $eventData['contact_id'] = $dao->contact_id;
-      $eventData['display_name'] = $dao->display_name;
-      $eventData['color'] = self::ACTIVITY_COLOR;
-
-      if (!empty($dao->image_URL)) {
-        $eventData['image_url'] = $dao->image_URL;
-      }
-      else {
-        if ($dao->contact_type == 'Individual') {
-          $eventData['image_url'] = $imagePath . 'Person.svg';
-        }
-        elseif ($dao->contact_type == 'Organization') {
-          $eventData['image_url'] = $imagePath . 'Organization.svg';
-        }
-        else {
-          $eventData['image_url'] = $imagePath . 'Person.svg';
-        }
-      }
-
-      if ($settings['includecontactnamesintitle'] && $eventData['targetContact']) {
+      if ($settings['include_contact_names_in_title'] && $eventData['targetContact']) {
         if (!empty($eventData['title'])) {
           $eventData['title'] .= ' ('.$eventData['targetContact'].')';
         } else {
@@ -205,7 +200,7 @@ class CRM_Calendar_Common_Activity {
     $activityTypes = [];
 
     $query = CRM_Utils_SQL_Select::from(CRM_Core_DAO_OptionValue::getTableName() . ' AS activity_type_value')
-      ->join('activity_type_group', 'LEFT JOIN ' . CRM_Core_DAO_OptionGroup::getTableName() . ' activity_type_group ON activity_type_group.id = activity_type_value.option_group_id')
+      ->join('activity_type_group', 'LEFT JOIN civicrm_option_group AS activity_type_group ON activity_type_group.id = activity_type_value.option_group_id')
       ->where('activity_type_group.name = "activity_type" ')
       ->where('activity_type_value.is_active = 1 ');
 
@@ -240,11 +235,14 @@ class CRM_Calendar_Common_Activity {
     $query = CRM_Utils_SQL_Select::from('civicrm_activity_contact')
       ->select('DISTINCT civicrm_contact.display_name')
       ->join('civicrm_contact', 'LEFT JOIN civicrm_contact ON civicrm_activity_contact.contact_id = civicrm_contact.id')
-      ->where("civicrm_activity_contact.activity_id = '" . $activityId . "'")
-      ->where("civicrm_activity_contact.record_type_id = '" . self::ACTIVITY_ROLE_ASSIGNEE_ID . "'")
+      ->where("civicrm_activity_contact.activity_id = %1")
+      ->where("civicrm_activity_contact.record_type_id = %2")
       ->toSQL();
 
-    $dao = CRM_Core_DAO::executeQuery($query);
+    $dao = CRM_Core_DAO::executeQuery($query, [
+      1 => [ $activityId, 'Integer' ],
+      2 => [ self::ACTIVITY_ROLE_ASSIGNEE_ID, 'String' ]
+    ]);
 
     while ($dao->fetch()) {
       $assignContactNames .= '<p>' . $dao->display_name . ';</p>';
@@ -266,11 +264,14 @@ class CRM_Calendar_Common_Activity {
     $query = CRM_Utils_SQL_Select::from('civicrm_activity_contact')
       ->select('DISTINCT civicrm_contact.display_name')
       ->join('civicrm_contact', 'LEFT JOIN civicrm_contact ON civicrm_activity_contact.contact_id = civicrm_contact.id')
-      ->where("civicrm_activity_contact.activity_id = '" . $activityId . "'")
-      ->where("civicrm_activity_contact.record_type_id = '" . self::ACTIVITY_ROLE_FOCUS_OR_TARGET_ID . "'")
+      ->where("civicrm_activity_contact.activity_id = %1")
+      ->where("civicrm_activity_contact.record_type_id = %2")
       ->toSQL();
 
-    $dao = CRM_Core_DAO::executeQuery($query);
+    $dao = CRM_Core_DAO::executeQuery($query, [
+      1 => [ $activityId, 'Integer' ],
+      2 => [ self::ACTIVITY_ROLE_FOCUS_OR_TARGET_ID, 'String' ]
+    ]);
 
     while ($dao->fetch()) {
       $targetContactNames .= $dao->display_name . ', ';

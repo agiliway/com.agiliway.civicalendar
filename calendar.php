@@ -150,14 +150,14 @@ function calendar_civicrm_tabset($path, &$tabs, $context) {
  *
  */
 function calendar_civicrm_navigationMenu(&$menu) {
-  $item[] = [
+  $civiCalendarSettings = [
     'name' => 'Calendar Settings',
     'url' => 'civicrm/admin/calendar',
     'permission' => 'administer CiviCRM',
     'operator' => NULL,
     'separator' => NULL,
   ];
-  _calendar_civix_insert_navigation_menu($menu, 'Administer/Customize Data and Screens', $item[0]);
+  _calendar_civix_insert_navigation_menu($menu, 'Administer/', $civiCalendarSettings);
 }
 
 /**
@@ -195,7 +195,6 @@ function calendar_civicrm_pageRun(&$page) {
   }
 }
 
-
 /**
  * Adding css and js files to page body
  */
@@ -216,21 +215,9 @@ function _calendar_civix_addJSCss() {
   CRM_Core_Resources::singleton()
     ->addScriptFile('com.agiliway.civicalendar', 'js/locale-all.js', 201, 'html-header');
 
-  //customize calendar translate
-  $localeFileName = false;
-  if (!empty(CRM_Calendar_Settings::getValue('locale'))) {
-    $filename = CRM_Calendar_Upgrader::instance()->getExtensionDir() . '/locale/' . CRM_Calendar_Settings::getValue('locale') . '.js';
-    if (file_exists($filename)) {
-      $localeFileName = CRM_Calendar_Settings::getValue('locale');
-    }
-  }
-
-  if (!empty($localeFileName)) {
-    CRM_Core_Resources::singleton()->addScriptFile('com.agiliway.civicalendar', 'locale/' . $localeFileName . '.js', 202, 'html-header');
-  }
-
   if (CRM_Calendar_Settings::isShoreditch()) {
     CRM_Core_Resources::singleton()
       ->addStyleFile('com.agiliway.civicalendar', 'css/shoreditch-fix.css', 199, 'html-header');
   }
+
 }

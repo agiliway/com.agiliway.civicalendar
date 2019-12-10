@@ -11,14 +11,14 @@
  */
 function civicrm_api3_calendar_get($params) {
   $calendarParams = [
-    'hidePastEvents' => $params['hidePastEvents'],
+    'hide_past_events' => CRM_Calendar_Settings::get(['hide_past_events'])['hide_past_events'],
     'startDate' => $params['start'],
     'endDate' => $params['end'],
     'type' => $params['type'],
   ];
 
   $eventsHandler = new CRM_Calendar_Common_Handler($params['contact_id'], $calendarParams);
-  $events = $eventsHandler->getAllEvents();
+  $events = $eventsHandler->getAllEventsApi();
 
   return civicrm_api3_create_success($events, $params);
 }
