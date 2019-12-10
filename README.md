@@ -16,6 +16,13 @@ The Calendar allows:
 * Supports 73 ​**locales**
 * **Quick viewing** event participants and registering new ones directly from previewing form
 *  Making activity types either hidden or visible 
+* Contact Calendar sharing
+* More advanced configuration settings:
+   * Filtering activities/events/cases by types
+   * Adjusting scroll pane (initially scrolls down to 6:00 AM)
+   * Setting default tab for calendar (month, week, day, agenda)
+   * Selecting time format, calendar cell size and locale
+   * Adding contact names in title and hiding past events
 
 ## Screenshots
 
@@ -30,6 +37,8 @@ The Calendar allows:
 ![Screenshot](/img/calendar_register_participant.png)
 ---
 ![Screenshot](/img/calendar_hide_activity.png)
+---
+![Screenshot](/img/calendar_settings.png)
 
 
 ## Requirements
