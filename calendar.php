@@ -220,4 +220,8 @@ function _calendar_civix_addJSCss() {
       ->addStyleFile('com.agiliway.civicalendar', 'css/shoreditch-fix.css', 199, 'html-header');
   }
 
+  CRM_Core_Resources::singleton()->addVars('datepicker_locale', ['language' => CRM_Calendar_Utils_Locale::getCurrentLocaleForCalendar()]);
+  CRM_Core_Region::instance('page-header')->add([
+    'scriptUrl' => CRM_Calendar_ExtensionUtil::url('js/DatepickerFix.js'),
+  ]);
 }

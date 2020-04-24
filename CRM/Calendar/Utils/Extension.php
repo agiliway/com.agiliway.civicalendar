@@ -58,9 +58,6 @@ class CRM_Calendar_Utils_Extension {
     }
     if (isset($allSettings['civicalendar_defaultview'])) {
       $neededSettings['civicalendar_default_view'] = $allSettings['civicalendar_defaultview'];
-    }    
-    if (isset($allSettings['civicalendar_locale'])) {
-      $neededSettings['civicalendar_locale'] = $allSettings['civicalendar_locale'];
     }
     if (isset($allSettings['civicalendar_includecontactnamesintitle'])) {
       $neededSettings['civicalendar_include_contact_names_in_title'] = $allSettings['civicalendar_includecontactnamesintitle'];

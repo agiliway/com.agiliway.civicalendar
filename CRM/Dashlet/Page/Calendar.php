@@ -5,32 +5,17 @@
  */
 class CRM_Dashlet_Page_Calendar extends CRM_Core_Page {
 
-  public $enabledComponents;
-
-  /**
-   * List activities as dashlet
-   *
-   * @return void
-   * @throws \CRM_Core_Exception
-   * @throws \CiviCRM_API3_Exception
-   */
-  function __construct($title = NULL, $mode = NULL) {
-    parent::__construct($title, $mode);
-
-    $this->enabledComponents = CRM_Calendar_Utils_Extension::getEnabledComponents();
-  }
-
   public function run() {
-
     if (!(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')) {
       _calendar_civix_addJSCss();
     }
+    $enabledComponents = CRM_Calendar_Utils_Extension::getEnabledComponents();
 
-    if (in_array('CiviEvent', $this->enabledComponents)) {
+    if (in_array('CiviEvent', $enabledComponents)) {
       $this->assign('event_is_enabled', TRUE);
     }
 
-    if (in_array('CiviCase', $this->enabledComponents)) {
+    if (in_array('CiviCase', $enabledComponents)) {
       $this->assign('case_is_enabled', TRUE);
     }
 
@@ -42,13 +27,13 @@ class CRM_Dashlet_Page_Calendar extends CRM_Core_Page {
       'default_view',
       'time_format',
       'hide_past_events',
-      'locale',
     ]);
     $settings['scrollTime'] = $settings['scroll_time'];
     $settings['defaultView'] = $settings['default_view'];
     $settings['timeFormat'] = $settings['time_format'];
     $settings['hidePastEvents'] = $settings['hide_past_events'];
-    $settings['locale'] = $settings['locale'];
+    $settings['locale'] = CRM_Calendar_Utils_Locale::getCurrentLocaleForCalendar();
+    $settings['languageMap'] = json_encode(CRM_Calendar_Utils_Locale::getLocaleMap());
     $this->assign('settings', $settings);
 
     $session = CRM_Core_Session::singleton();

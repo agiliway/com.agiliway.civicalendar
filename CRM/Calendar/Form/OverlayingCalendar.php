@@ -45,9 +45,10 @@ class CRM_Calendar_Form_OverlayingCalendar extends CRM_Core_Form {
     }
 
     $this->assign('activityColor', CRM_Calendar_Common_Activity::ACTIVITY_COLOR);
-    $this->assign('language', CRM_Calendar_Settings::get(['locale'])['locale']);
-    $this->assign('timeFormat', CRM_Calendar_Settings::get(['time_format'])['time_format']);
+    $this->assign('locale', CRM_Calendar_Utils_Locale::getCurrentLocaleForCalendar());
     $this->assign('default_view', $defaultView);
+    $this->assign('timeFormat', CRM_Calendar_Settings::get(['time_format'])['time_format']);
+    $this->assign('scrollTime', CRM_Calendar_Settings::get(['scroll_time'])['scroll_time']);
     $this->assign('imagePath', CRM_Calendar_Utils_Extension::getImagePath());
 
     CRM_Utils_System::setTitle(ts('Calendar'));
