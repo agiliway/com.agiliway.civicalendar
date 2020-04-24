@@ -24,20 +24,17 @@ class CRM_Calendar_Form_Calendar extends CRM_Core_Form {
       _calendar_civix_addJSCss();
     }
 
-    $tsLocale = CRM_Core_I18n::getLocale();
-
     $settings = CRM_Calendar_Settings::get([
       'scroll_time',
       'default_view',
       'time_format',
       'hide_past_events',
-      'locale',
     ]);
     $settings['scrollTime'] = $settings['scroll_time'];
     $settings['defaultView'] = $settings['default_view'];
     $settings['timeFormat'] = $settings['time_format'];
     $settings['hidePastEvents'] = $settings['hide_past_events'];
-    $settings['locale'] = $settings['locale'];
+    $settings['locale'] = CRM_Calendar_Utils_Locale::getCurrentLocaleForCalendar();
 
     $this->assign('settings', $settings);
 
@@ -59,9 +56,6 @@ class CRM_Calendar_Form_Calendar extends CRM_Core_Form {
     }
 
     $this->assign('activityColor', CRM_Calendar_Common_Activity::ACTIVITY_COLOR);
-
-    $this->assign('language', $tsLocale);
-
     CRM_Utils_System::setTitle(ts('Calendar'));
   }
 

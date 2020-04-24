@@ -143,7 +143,7 @@
       }
 
       var events_calendar = CRM.$('#calendar').fullCalendar({
-        locale: '{/literal}{$language}{literal}',
+        locale: '{/literal}{$locale}{literal}',
         header: {
           left: 'prev,next today',
           center: 'title',
@@ -151,17 +151,10 @@
         },
         dayOfMonthFormat: 'ddd DD',
         timeFormat: '{/literal}{$timeFormat}{literal}',
+        slotLabelFormat:'{/literal}{$timeFormat}{literal}',
+        scrollTime: '{/literal}{$scrollTime}{literal}',
         height: '500',
-        minTime: '08:00:00',
-        maxTime: '20:00:00',
-        eventLimit: 3,
-        businessHours: {
-          start: '09:00',
-          end: '19:00',
-          dow: [1, 2, 3, 4, 5]
-        },
         eventLimitText: "",
-        lang: '{/literal}{$language}{literal}',
         defaultView: '{/literal}{$default_view}{literal}',
         nowIndicator: true,
         displayEventTime: true,

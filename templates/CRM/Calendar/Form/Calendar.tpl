@@ -224,17 +224,9 @@
       },
       dayOfMonthFormat: 'ddd DD',
       timeFormat: '{/literal}{$settings.timeFormat}{literal}',
+      slotLabelFormat:'{/literal}{$settings.timeFormat}{literal}',
       scrollTime: '{/literal}{$settings.scrollTime}{literal}',
-      minTime: '08:00:00',
-      maxTime: '20:00:00',
-      eventLimit: 3,
-      businessHours: {
-        start: '09:00',
-        end: '19:00',
-        dow: [1, 2, 3, 4, 5]
-      },
       eventLimitText: "",
-      lang: '{/literal}{$language}{literal}',
       defaultView: '{/literal}{$settings.defaultView}{literal}',
       nowIndicator: true,
       displayEventTime: true,

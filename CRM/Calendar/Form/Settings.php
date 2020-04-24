@@ -44,6 +44,15 @@ class CRM_Calendar_Form_Settings extends CRM_Core_Form {
       }
     }
 
+    if (CRM_Calendar_Utils_CiviMobile::isCiviMobileApiEnable() && !CRM_Calendar_Utils_CiviMobile::isActivateCiviCalendarSettings()) {
+      $message = 'CiviCRM calendar and CiviMobile calendar are not synchronized!';
+      $message .= ' This may cause different info is shown on the calendar in CiviMobile app.';
+      $message .= ' It is recommended to set “Synchronize with CiviCalendar” flag at <a href=';
+      $message .= CRM_Utils_System::url('civicrm/civimobile/calendar/settings');
+      $message .= '>CiviMobile Setting page</a>(need version higher than 5.0) to keep both calendars synchronized.';
+      $this->assign('synchronizationNotice', ts($message));
+    }
+
     $this->addButtons([
       [
         'type' => 'submit',
@@ -122,6 +131,16 @@ class CRM_Calendar_Form_Settings extends CRM_Core_Form {
           $nonPrefixedSettings[CRM_Calendar_Settings::getName($name, FALSE)] = NULL;
         }
       }
+    }
+
+    $components = civicrm_api3('Setting', 'getvalue', [
+      'name' => "enable_components",
+    ]);
+    if (!in_array('CiviCase', $components)) {
+      unset($nonPrefixedSettings['case_types']);
+    }
+    if (!in_array('CiviEvent', $components)) {
+      unset($nonPrefixedSettings['event_types']);
     }
 
     return $nonPrefixedSettings;

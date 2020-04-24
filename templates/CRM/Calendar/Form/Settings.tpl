@@ -1,22 +1,32 @@
-<div class="crm-block crm-form-block crm-smartdebit-settings-form-block">
+<div class="crm-block crm-form-block crm-form-civimobilesettings-block">
   <div class="crm-submit-buttons">
     {include file="CRM/common/formButtons.tpl" location="top"}
   </div>
-
-  <h3>Configuration</h3>
-  <table class="form-layout-compressed">
-    <tbody>
-    {foreach from=$elementNames item=elementName}
-      <tr>
+  <div>
+    <table class="form-layout-compressed">
+      <tbody>
+      {foreach from=$elementNames item=elementName}
+      <tr class="crm-group-form-block-isReserved">
+        <td class="label" style="width: 30%">
+          <label for="{$elementName}">
+            {$form.$elementName.label} {help id=$elementName title=$form.$elementName.label}
+          </label>
+        </td>
         <td>
-          <label for="{$elementName}">{$form.$elementName.label} {help id=$elementName title=$form.$elementName.label}</label>
-          {$form.$elementName.html}
+          <div>
+            {$form.$elementName.html}
+          </div>
         </td>
       </tr>
-    {/foreach}
-    </tbody>
-  </table>
-
+      {/foreach}
+      </tbody>
+    </table>
+  </div>
+  {if $synchronizationNotice}
+    <div class="status">
+      {$synchronizationNotice}
+    </div>
+  {/if}
   <div class="crm-submit-buttons">
     {include file="CRM/common/formButtons.tpl" location="bottom"}
   </div>

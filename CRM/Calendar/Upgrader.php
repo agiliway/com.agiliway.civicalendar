@@ -12,6 +12,20 @@ class CRM_Calendar_Upgrader extends CRM_Calendar_Upgrader_Base {
     return TRUE;
   }
 
+  public function upgrade_0002() {
+    $this->ctx->log->info('Applying update 0002');
+    CRM_Core_Invoke::rebuildMenuAndCaches(TRUE);
+
+    return TRUE;
+  }
+
+  public function upgrade_0003() {
+    $this->ctx->log->info('Applying update 0003');
+    CRM_Core_Invoke::rebuildMenuAndCaches(TRUE);
+
+    return TRUE;
+  }
+
   public function install() {
     $this->executeSqlFile('sql/install.sql');
     $this->addMenuItems();

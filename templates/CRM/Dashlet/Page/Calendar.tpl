@@ -14,11 +14,9 @@
       <div data-div="add-button-open" class="add-button-open" style="display: none">
         {if $case_is_enabled}<a data-popup="0"
                                 href="{crmURL p='civicrm/case/add' q="reset=1&action=add&cid=`$contactId`&context=case" h=0}">{ts}Cases{/ts}</a>
-          <br>
         {/if}
         {if $event_is_enabled}<a data-popup="0"
                                  href="{crmURL p='civicrm/contact/view/participant' q="reset=1&action=add&cid=`$contactId`&context=participant" h=0}">{ts}Events{/ts}</a>
-          <br>
         {/if}
         <a data-popup="0"
            href="{crmURL p='civicrm/activity' q="reset=1&action=add&context=standalone" h=0}">{ts}Activities{/ts}</a>
@@ -72,13 +70,24 @@
 {literal}
 <script type="text/javascript">
   CRM.$(function ($) {
+    var sessionLanguage = (JSON.parse(localStorage.getItem('CRMmenubar')).locale);
+    var calendarCacheLanguage = ($('[data-div="settings"]').attr('data-locale'));
+    var languageMap = {/literal}{$settings.languageMap}{literal};
+    if (languageMap[sessionLanguage] != undefined && calendarCacheLanguage != undefined
+            && calendarCacheLanguage != languageMap[sessionLanguage]) {
+      localStorage.removeItem('dashboard');
+      location.reload();
+    }
+
+    $('select[name ="lcMessages"]').change(function () {
+      localStorage.removeItem('dashboard');
+    });
 
     $(document).ready(function () {
       initContactEventCalendar{/literal}{$context}{literal}();
       initButtons{/literal}{$context}{literal}();
     });
 
-    /*todo new*/
     function initButtons() {
       $(document).on('click', '[data-button="add-event"]', function () {
         var $addButtonOpen = $('[data-div="add-button-open"]');
@@ -126,6 +135,7 @@
         defaultView: settings.attr('data-defaultView'),
         scrollTime: settings.attr('data-scrollTime'),
         timeFormat: settings.attr('data-timeFormat'),
+        slotLabelFormat: settings.attr('data-timeFormat'),
         locale: settings.attr('data-locale'),
         firstDay: 1,
         displayEventTime: true,
