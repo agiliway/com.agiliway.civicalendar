@@ -134,7 +134,7 @@ function calendar_civicrm_tabset($path, &$tabs, $context) {
     $tabs[] = [
       'id' => 'calendar',
       'url' => $url,
-      'title' => ts('Calendar'),
+      'title' => E::ts('Calendar'),
       'weight' => 15,
       'icon' => 'crm-i fa-calendar-check-o',
     ];

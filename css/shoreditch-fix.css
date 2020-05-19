@@ -154,7 +154,7 @@
 .page-civicrm-contact-view .tabsBlockContent .fc-header-toolbar .fc-left > button,
 .widget-calendar .tabsBlockContent .fc-header-toolbar .fc-right button,
 .page-civicrm-contact-view .tabsBlockContent .fc-header-toolbar .fc-right button {
-    max-width: 62px;
+    max-width: 70px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

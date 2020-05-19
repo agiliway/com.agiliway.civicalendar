@@ -11,7 +11,7 @@ class CRM_Calendar_Settings {
    * @var boolean
    *  Flag to see if Extension Shoreditch is active
    */
-  private static $isShoreditch;
+  private static $isShoreditch = FALSE;
 
   /**
    * Get settings prefix name for this extension
@@ -117,13 +117,17 @@ class CRM_Calendar_Settings {
    * @throws \CiviCRM_API3_Exception
    */
   public static function isShoreditch() {
-    if (is_null(self::$isShoreditch)) {
+    if (!self::$isShoreditch) {
       $shoreditchExtensionCount = civicrm_api3('Extension', 'getcount', [
         'full_name' => 'org.civicrm.shoreditch',
         'is_active' => 1,
       ]);
 
-      self::$isShoreditch = !empty(Civi::settings()->get('customCSSURL')) && $shoreditchExtensionCount == 1;
+      if ($shoreditchExtensionCount == 1 && function_exists('_shoreditch_isActive')) {
+        self::$isShoreditch = _shoreditch_isActive();
+      } else {
+        self::$isShoreditch = $shoreditchExtensionCount == 1;
+      }
     }
 
     return self::$isShoreditch;

@@ -8,7 +8,6 @@
     CRM.$(document).ready(function () {
       if (CRM.$("div.crm-actions-ribbon").length) {
         var registerParticipantElement = CRM.$('[data-li="register_participant"]');
-
         CRM.$(registerParticipantElement).prependTo('#crm-participant-list > .crm-participant-list-inner > ul');
         registerParticipantElement.show();
       }

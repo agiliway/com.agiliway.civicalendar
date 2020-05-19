@@ -1,5 +1,7 @@
 <?php
 
+use CRM_Calendar_ExtensionUtil as E;
+
 class CRM_Calendar_Common_Activity {
 
   /**
@@ -289,7 +291,7 @@ class CRM_Calendar_Common_Activity {
     $activityRoles = CRM_Core_OptionGroup::values('activity_contacts', FALSE, FALSE, FALSE, NULL, 'name');
 
     foreach ($activityRoles as &$val) {
-      $val = ts($val);
+      $val = E::ts($val);
     }
 
     return $activityRoles;

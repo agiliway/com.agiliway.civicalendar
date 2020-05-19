@@ -1,5 +1,7 @@
 <?php
 
+use CRM_Calendar_ExtensionUtil as E;
+
 class CRM_Calendar_Form_OverlayingCalendar extends CRM_Core_Form {
 
   /**
@@ -51,7 +53,7 @@ class CRM_Calendar_Form_OverlayingCalendar extends CRM_Core_Form {
     $this->assign('scrollTime', CRM_Calendar_Settings::get(['scroll_time'])['scroll_time']);
     $this->assign('imagePath', CRM_Calendar_Utils_Extension::getImagePath());
 
-    CRM_Utils_System::setTitle(ts('Calendar'));
+    CRM_Utils_System::setTitle(E::ts('Calendar'));
   }
 
   /**
@@ -59,31 +61,31 @@ class CRM_Calendar_Form_OverlayingCalendar extends CRM_Core_Form {
    */
   public function buildQuickForm() {
 
-    $this->addEntityRef('contact_id', ts('Contact'), [], FALSE);
+    $this->addEntityRef('contact_id', E::ts('Contact'), [], FALSE);
 
     if (in_array('CiviEvent', $this->enabledComponents)) {
       $eventTypes = CRM_Event_PseudoConstant::eventType();
-      $this->add('select', 'event_type', ts('Event type'), $eventTypes, FALSE, [
+      $this->add('select', 'event_type', E::ts('Event type'), $eventTypes, FALSE, [
         'class' => 'crm-select2',
         'multiple' => 'multiple',
-        'placeholder' => ts('- select -'),
+        'placeholder' => E::ts('- select -'),
       ]);
     }
 
     if (in_array('CiviCase', $this->enabledComponents)) {
       $caseTypes = CRM_Case_PseudoConstant::caseType();
-      $this->add('select', 'case_type', ts('Case type'), $caseTypes, FALSE, [
+      $this->add('select', 'case_type', E::ts('Case type'), $caseTypes, FALSE, [
         'class' => 'crm-select2',
         'multiple' => 'multiple',
-        'placeholder' => ts('- select -'),
+        'placeholder' => E::ts('- select -'),
       ]);
     }
 
     $activityTypes = CRM_Calendar_Common_Activity::getTypes();
-    $this->add('select', 'activity_type', ts('Activity Type'), $activityTypes, FALSE, [
+    $this->add('select', 'activity_type', E::ts('Activity Type'), $activityTypes, FALSE, [
       'class' => 'crm-select2',
       'multiple' => 'multiple',
-      'placeholder' => ts('- select -'),
+      'placeholder' => E::ts('- select -'),
     ]);
   }
 
