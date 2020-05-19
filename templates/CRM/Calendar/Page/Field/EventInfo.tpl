@@ -6,10 +6,12 @@
 <script type="text/javascript">
   (function() {
     CRM.$(document).ready(function () {
-      var registerParticipantElement = CRM.$('[data-li="register_participant"]');
+      if (CRM.$("div.crm-actions-ribbon").length) {
+        var registerParticipantElement = CRM.$('[data-li="register_participant"]');
 
-      CRM.$(registerParticipantElement).prependTo('#crm-participant-list > .crm-participant-list-inner > ul');
-      registerParticipantElement.show();
+        CRM.$(registerParticipantElement).prependTo('#crm-participant-list > .crm-participant-list-inner > ul');
+        registerParticipantElement.show();
+      }
     });
   })();
 </script>
