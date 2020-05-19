@@ -1,5 +1,7 @@
 <?php
 
+use CRM_Calendar_ExtensionUtil as E;
+
 // AUTO-GENERATED FILE -- Civix may overwrite any changes made to this file
 
 /**
@@ -216,7 +218,7 @@ class CRM_Calendar_Upgrader_Base {
 
     foreach ($this->getRevisions() as $revision) {
       if ($revision > $currentRevision) {
-        $title = ts('Upgrade %1 to revision %2', [
+        $title = E::ts('Upgrade %1 to revision %2', [
           1 => $this->extensionName,
           2 => $revision,
         ]);

@@ -1,5 +1,7 @@
 <?php
 
+use CRM_Calendar_ExtensionUtil as E;
+
 /**
  * Collection of upgrade steps.
  */
@@ -56,7 +58,7 @@ class CRM_Calendar_Upgrader extends CRM_Calendar_Upgrader_Base {
       'sequential' => 1,
       'return' => ['id'],
       'is_active' => 1,
-      'label' => ts('Contact calendar sharing'),
+      'label' => E::ts('Contact calendar sharing'),
     ]);
 
     if ($resultNavigationCalendar['count'] > 0){
@@ -67,14 +69,14 @@ class CRM_Calendar_Upgrader extends CRM_Calendar_Upgrader_Base {
       'sequential' => 1,
       'return' => ['id'],
       'is_active' => 1,
-      'label' => ts('Contacts'),
+      'label' => E::ts('Contacts'),
     ]);
 
     if ($resultNavigation['count'] == 1) {
       $parentId = $resultNavigation['values'][0]['id'];
 
       $navigation = [
-        'label' => ts('Contact calendar sharing'),
+        'label' => E::ts('Contact calendar sharing'),
         'name' => 'Contact calendar sharing',
         'url' => 'civicrm/calendar/overlaying',
         'permission' => 'access CiviCRM',
@@ -95,7 +97,7 @@ class CRM_Calendar_Upgrader extends CRM_Calendar_Upgrader_Base {
     $resultNavigation = civicrm_api3('Navigation', 'get', [
       'sequential' => 1,
       'return' => ['id'],
-      'name' => ts('Contact calendar sharing'),
+      'name' => E::ts('Contact calendar sharing'),
     ]);
 
     if ($resultNavigation['count'] == 1) {

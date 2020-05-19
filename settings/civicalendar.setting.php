@@ -1,5 +1,7 @@
 <?php
 
+use CRM_Calendar_ExtensionUtil as E;
+
 return [
   'civicalendar_activity_types' => [
     'group_name' => 'CiviCalendar Settings',
@@ -10,7 +12,7 @@ return [
     'is_domain' => 1,
     'is_contact' => 0,
     'default' => [],
-    'description' => ts('Shows certain activity types on the calendar'),
+    'description' => E::ts('Shows certain activity types on the calendar'),
     'html_type' => 'Select',
     'html_attributes' => [
       'size' => 20,
@@ -29,7 +31,7 @@ return [
     'is_domain' => 1,
     'is_contact' => 0,
     'default' => [],
-    'description' => ts('Shows certain event types on the calendar'),
+    'description' => E::ts('Shows certain event types on the calendar'),
     'html_type' => 'Select',
     'html_attributes' => [
       'size' => 20,
@@ -48,7 +50,7 @@ return [
     'is_domain' => 1,
     'is_contact' => 0,
     'default' => [],
-    'description' => ts('Shows certain case types on the calendar'),
+    'description' => E::ts('Shows certain case types on the calendar'),
     'html_type' => 'Select',
     'html_attributes' => [
       'size' => 20,
@@ -67,7 +69,7 @@ return [
     'is_domain' => 1,
     'is_contact' => 0,
     'default' => '6:00:00',
-    'description' => ts('Scroll pane is initially scrolled down to'),
+    'description' => E::ts('Scroll pane is initially scrolled down to'),
     'html_type' => 'Select',
     'html_attributes' => [
       'size' => 20,
@@ -110,17 +112,17 @@ return [
     'is_domain' => 1,
     'is_contact' => 0,
     'default' => 'month',
-    'description' => ts('Default tab for calendar (month, week, day, agenda)'),
+    'description' => E::ts('Default tab for calendar (month, week, day, agenda)'),
     'html_type' => 'Select',
     'html_attributes' => [
       'size' => 20,
       'class' => 'crm-select2',
     ],
     'option_values' => [
-      'month' => ts('month'),
-      'agendaWeek' => ts('week'),
-      'agendaDay' => ts('day'),
-      'listMonth' => ts('agenda'),
+      'month' => E::ts('month'),
+      'agendaWeek' => E::ts('week'),
+      'agendaDay' => E::ts('day'),
+      'listMonth' => E::ts('agenda'),
     ],
   ],
 
@@ -133,15 +135,15 @@ return [
     'is_domain' => 1,
     'is_contact' => 0,
     'default' => '(h:mm)t',
-    'description' => ts('Time Format'),
+    'description' => E::ts('Time Format'),
     'html_type' => 'Select',
     'html_attributes' => [
       'size' => 20,
       'class' => 'crm-select2',
     ],
     'option_values' => [
-      '(h:mm)t' => ts('5:00p'),
-      'H:mm' => ts('17:00'),
+      '(h:mm)t' => E::ts('5:00p'),
+      'H:mm' => E::ts('17:00'),
     ],
   ],
 
@@ -154,7 +156,7 @@ return [
     'is_domain' => 1,
     'is_contact' => 0,
     'default' => '0',
-    'description' => ts('Include contact names in title'),
+    'description' => E::ts('Include contact names in title'),
     'html_type' => 'Checkbox',
   ],
 
@@ -167,7 +169,7 @@ return [
     'is_domain' => 1,
     'is_contact' => 0,
     'default' => '0',
-    'description' => ts('Hide past events'),
+    'description' => E::ts('Hide past events'),
     'html_type' => 'Checkbox',
   ],
 ];

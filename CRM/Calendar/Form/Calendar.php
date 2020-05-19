@@ -1,5 +1,7 @@
 <?php
 
+use CRM_Calendar_ExtensionUtil as E;
+
 class CRM_Calendar_Form_Calendar extends CRM_Core_Form {
 
   /**
@@ -56,7 +58,7 @@ class CRM_Calendar_Form_Calendar extends CRM_Core_Form {
     }
 
     $this->assign('activityColor', CRM_Calendar_Common_Activity::ACTIVITY_COLOR);
-    CRM_Utils_System::setTitle(ts('Calendar'));
+    CRM_Utils_System::setTitle(E::ts('Calendar'));
   }
 
   /**
@@ -67,33 +69,33 @@ class CRM_Calendar_Form_Calendar extends CRM_Core_Form {
 
     if (in_array('CiviEvent', $this->enabledComponents)) {
       $eventTypes = CRM_Event_PseudoConstant::eventType();
-      $this->add('select', 'event_type', ts('Event type'), $eventTypes, FALSE, [
+      $this->add('select', 'event_type', E::ts('Event type'), $eventTypes, FALSE, [
         'class' => 'crm-select2',
         'multiple' => 'multiple',
-        'placeholder' => ts('- select -'),
+        'placeholder' => E::ts('- select -'),
       ]);
 
       $eventStatus = CRM_Calendar_Common_Event::getParticipantStatus();
-      $this->add('select', 'event_participant_status', ts('Participant status'), $eventStatus, FALSE, [
+      $this->add('select', 'event_participant_status', E::ts('Participant status'), $eventStatus, FALSE, [
         'class' => 'crm-select2',
         'multiple' => 'multiple',
-        'placeholder' => ts('- select -'),
+        'placeholder' => E::ts('- select -'),
       ]);
     }
 
     if (in_array('CiviCase', $this->enabledComponents)) {
       $caseTypes = CRM_Case_PseudoConstant::caseType();
-      $this->add('select', 'case_type', ts('Case type'), $caseTypes, FALSE, [
+      $this->add('select', 'case_type', E::ts('Case type'), $caseTypes, FALSE, [
         'class' => 'crm-select2',
         'multiple' => 'multiple',
-        'placeholder' => ts('- select -'),
+        'placeholder' => E::ts('- select -'),
       ]);
 
       $caseStatuses = CRM_Case_PseudoConstant::caseStatus();
-      $this->add('select', 'case_status', ts('Case status'), $caseStatuses, FALSE, [
+      $this->add('select', 'case_status', E::ts('Case status'), $caseStatuses, FALSE, [
         'class' => 'crm-select2',
         'multiple' => 'multiple',
-        'placeholder' => ts('- select -'),
+        'placeholder' => E::ts('- select -'),
       ]);
     }
 
@@ -104,23 +106,23 @@ class CRM_Calendar_Form_Calendar extends CRM_Core_Form {
         unset($activityTypes[$activityTypeId]);
       }
     }
-    $this->add('select', 'activity_type', ts('Activity Type'), $activityTypes, FALSE, [
+    $this->add('select', 'activity_type', E::ts('Activity Type'), $activityTypes, FALSE, [
       'class' => 'crm-select2',
       'multiple' => 'multiple',
-      'placeholder' => ts('- select -'),
+      'placeholder' => E::ts('- select -'),
     ]);
 
     $activityRoles = CRM_Calendar_Common_Activity::getRoles();
     $this->add('select', 'activity_role', ts('Activity Role'), $activityRoles, FALSE, [
       'class' => 'crm-select2',
-      'placeholder' => ts('- select -'),
+      'placeholder' => E::ts('- select -'),
     ]);
 
     $activityStatus = CRM_Calendar_Common_Activity::getStatus();
-    $this->add('select', 'activity_status', ts('Activity Status'), $activityStatus, FALSE, [
+    $this->add('select', 'activity_status', E::ts('Activity Status'), $activityStatus, FALSE, [
       'class' => 'crm-select2',
       'multiple' => 'multiple',
-      'placeholder' => ts('- select -'),
+      'placeholder' => E::ts('- select -'),
     ]);
   }
 

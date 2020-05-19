@@ -1,5 +1,7 @@
 <?php
 
+use CRM_Calendar_ExtensionUtil as E;
+
 /**
  * Form controller class
  *
@@ -10,7 +12,7 @@ class CRM_Calendar_Form_Settings extends CRM_Core_Form {
   public function buildQuickForm() {
     parent::buildQuickForm();
 
-    CRM_Utils_System::setTitle(CRM_Calendar_Settings::TITLE . ' - ' . ts('Settings'));
+    CRM_Utils_System::setTitle(CRM_Calendar_Settings::TITLE . ' - ' . E::ts('Settings'));
 
     $settings = $this->getFormSettings();
 
@@ -18,11 +20,11 @@ class CRM_Calendar_Form_Settings extends CRM_Core_Form {
       if (isset($setting['html_type'])) {
         switch ($setting['html_type']) {
           case 'Text':
-            $this->addElement('text', $name, ts($setting['description']), $setting['html_attributes'], []);
+            $this->addElement('text', $name, E::ts($setting['description']), $setting['html_attributes'], []);
             break;
 
           case 'Checkbox':
-            $this->addElement('checkbox', $name, ts($setting['description']), '', '');
+            $this->addElement('checkbox', $name, E::ts($setting['description']), '', '');
             break;
 
           case 'Select':
@@ -35,7 +37,7 @@ class CRM_Calendar_Form_Settings extends CRM_Core_Form {
               ));
               $options = $options['values'];
             }
-            $select = $this->addElement('select', $name, ts($setting['description']), $options, $setting['html_attributes']);
+            $select = $this->addElement('select', $name, E::ts($setting['description']), $options, $setting['html_attributes']);
             if (isset($setting['multiple'])) {
               $select->setMultiple($setting['multiple']);
             }
@@ -50,18 +52,18 @@ class CRM_Calendar_Form_Settings extends CRM_Core_Form {
       $message .= ' It is recommended to set “Synchronize with CiviCalendar” flag at <a href=';
       $message .= CRM_Utils_System::url('civicrm/civimobile/calendar/settings');
       $message .= '>CiviMobile Setting page</a>(need version higher than 5.0) to keep both calendars synchronized.';
-      $this->assign('synchronizationNotice', ts($message));
+      $this->assign('synchronizationNotice', E::ts($message));
     }
 
     $this->addButtons([
       [
         'type' => 'submit',
-        'name' => ts('Submit'),
+        'name' => E::ts('Submit'),
         'isDefault' => TRUE,
       ],
       [
         'type' => 'cancel',
-        'name' => ts('Cancel'),
+        'name' => E::ts('Cancel'),
       ],
     ]);
 
