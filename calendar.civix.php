@@ -7,11 +7,8 @@
  * extension.
  */
 class CRM_Calendar_ExtensionUtil {
-
   const SHORT_NAME = 'calendar';
-
   const LONG_NAME = 'com.agiliway.civicalendar';
-
   const CLASS_PREFIX = 'CRM_Calendar';
 
   /**
@@ -23,7 +20,6 @@ class CRM_Calendar_ExtensionUtil {
    * @param string $text
    *   Canonical message text (generally en_US).
    * @param array $params
-   *
    * @return string
    *   Translated text.
    * @see ts
@@ -41,15 +37,13 @@ class CRM_Calendar_ExtensionUtil {
    * @param string|NULL $file
    *   Ex: NULL.
    *   Ex: 'css/foo.css'.
-   *
    * @return string
    *   Ex: 'http://example.org/sites/default/ext/org.example.foo'.
    *   Ex: 'http://example.org/sites/default/ext/org.example.foo/css/foo.css'.
    */
   public static function url($file = NULL) {
     if ($file === NULL) {
-      return rtrim(CRM_Core_Resources::singleton()
-        ->getUrl(self::LONG_NAME), '/');
+      return rtrim(CRM_Core_Resources::singleton()->getUrl(self::LONG_NAME), '/');
     }
     return CRM_Core_Resources::singleton()->getUrl(self::LONG_NAME, $file);
   }
@@ -60,7 +54,6 @@ class CRM_Calendar_ExtensionUtil {
    * @param string|NULL $file
    *   Ex: NULL.
    *   Ex: 'css/foo.css'.
-   *
    * @return string
    *   Ex: '/var/www/example.org/sites/default/ext/org.example.foo'.
    *   Ex: '/var/www/example.org/sites/default/ext/org.example.foo/css/foo.css'.
@@ -75,7 +68,6 @@ class CRM_Calendar_ExtensionUtil {
    *
    * @param string $suffix
    *   Ex: 'Page_HelloWorld' or 'Page\\HelloWorld'.
-   *
    * @return string
    *   Ex: 'CRM_Foo_Page_HelloWorld'.
    */
@@ -90,7 +82,7 @@ use CRM_Calendar_ExtensionUtil as E;
 /**
  * (Delegated) Implements hook_civicrm_config().
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_config
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_config
  */
 function _calendar_civix_civicrm_config(&$config = NULL) {
   static $configured = FALSE;
@@ -120,7 +112,7 @@ function _calendar_civix_civicrm_config(&$config = NULL) {
  *
  * @param $files array(string)
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_xmlMenu
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_xmlMenu
  */
 function _calendar_civix_civicrm_xmlMenu(&$files) {
   foreach (_calendar_civix_glob(__DIR__ . '/xml/Menu/*.xml') as $file) {
@@ -131,7 +123,7 @@ function _calendar_civix_civicrm_xmlMenu(&$files) {
 /**
  * Implements hook_civicrm_install().
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_install
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_install
  */
 function _calendar_civix_civicrm_install() {
   _calendar_civix_civicrm_config();
@@ -143,7 +135,7 @@ function _calendar_civix_civicrm_install() {
 /**
  * Implements hook_civicrm_postInstall().
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_postInstall
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_postInstall
  */
 function _calendar_civix_civicrm_postInstall() {
   _calendar_civix_civicrm_config();
@@ -157,7 +149,7 @@ function _calendar_civix_civicrm_postInstall() {
 /**
  * Implements hook_civicrm_uninstall().
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_uninstall
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_uninstall
  */
 function _calendar_civix_civicrm_uninstall() {
   _calendar_civix_civicrm_config();
@@ -169,7 +161,7 @@ function _calendar_civix_civicrm_uninstall() {
 /**
  * (Delegated) Implements hook_civicrm_enable().
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_enable
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_enable
  */
 function _calendar_civix_civicrm_enable() {
   _calendar_civix_civicrm_config();
@@ -183,7 +175,7 @@ function _calendar_civix_civicrm_enable() {
 /**
  * (Delegated) Implements hook_civicrm_disable().
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_disable
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_disable
  * @return mixed
  */
 function _calendar_civix_civicrm_disable() {
@@ -198,15 +190,14 @@ function _calendar_civix_civicrm_disable() {
 /**
  * (Delegated) Implements hook_civicrm_upgrade().
  *
- * @param $op string, the type of operation being performed; 'check' or
- *   'enqueue'
- * @param $queue CRM_Queue_Queue, (for 'enqueue') the modifiable list of
- *   pending up upgrade tasks
+ * @param $op string, the type of operation being performed; 'check' or 'enqueue'
+ * @param $queue CRM_Queue_Queue, (for 'enqueue') the modifiable list of pending up upgrade tasks
  *
- * @return mixed  based on op. for 'check', returns array(boolean) (TRUE if
- *   upgrades are pending) for 'enqueue', returns void
+ * @return mixed
+ *   based on op. for 'check', returns array(boolean) (TRUE if upgrades are pending)
+ *   for 'enqueue', returns void
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_upgrade
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_upgrade
  */
 function _calendar_civix_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
   if ($upgrader = _calendar_civix_upgrader()) {
@@ -227,15 +218,15 @@ function _calendar_civix_upgrader() {
 }
 
 /**
- * Search directory tree for files which match a glob pattern
+ * Search directory tree for files which match a glob pattern.
  *
  * Note: Dot-directories (like "..", ".git", or ".svn") will be ignored.
  * Note: In Civi 4.3+, delegate to CRM_Utils_File::findFiles()
  *
- * @param $dir string, base dir
- * @param $pattern string, glob pattern, eg "*.txt"
+ * @param string $dir base dir
+ * @param string $pattern , glob pattern, eg "*.txt"
  *
- * @return array(string)
+ * @return array
  */
 function _calendar_civix_find_files($dir, $pattern) {
   if (is_callable(['CRM_Utils_File', 'findFiles'])) {
@@ -254,7 +245,7 @@ function _calendar_civix_find_files($dir, $pattern) {
     if ($dh = opendir($subdir)) {
       while (FALSE !== ($entry = readdir($dh))) {
         $path = $subdir . DIRECTORY_SEPARATOR . $entry;
-        if ($entry{0} == '.') {
+        if ($entry[0] == '.') {
         }
         elseif (is_dir($path)) {
           $todos[] = $path;
@@ -271,20 +262,21 @@ function _calendar_civix_find_files($dir, $pattern) {
  *
  * Find any *.mgd.php files, merge their content, and return.
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_managed
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_managed
  */
 function _calendar_civix_civicrm_managed(&$entities) {
   $mgdFiles = _calendar_civix_find_files(__DIR__, '*.mgd.php');
+  sort($mgdFiles);
   foreach ($mgdFiles as $file) {
     $es = include $file;
     foreach ($es as $e) {
       if (empty($e['module'])) {
         $e['module'] = E::LONG_NAME;
       }
-      $entities[] = $e;
       if (empty($e['params']['version'])) {
         $e['params']['version'] = '3';
       }
+      $entities[] = $e;
     }
   }
 }
@@ -296,7 +288,7 @@ function _calendar_civix_civicrm_managed(&$entities) {
  *
  * Note: This hook only runs in CiviCRM 4.4+.
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_caseTypes
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_caseTypes
  */
 function _calendar_civix_civicrm_caseTypes(&$caseTypes) {
   if (!is_dir(__DIR__ . '/xml/case')) {
@@ -306,8 +298,8 @@ function _calendar_civix_civicrm_caseTypes(&$caseTypes) {
   foreach (_calendar_civix_glob(__DIR__ . '/xml/case/*.xml') as $file) {
     $name = preg_replace('/\.xml$/', '', basename($file));
     if ($name != CRM_Case_XMLProcessor::mungeCaseType($name)) {
-      $errorMessage = sprintf('Case-type file name is malformed (%s vs %s)', $name, CRM_Case_XMLProcessor::mungeCaseType($name));
-      CRM_Core_Error::fatal($errorMessage);
+      $errorMessage = sprintf("Case-type file name is malformed (%s vs %s)", $name, CRM_Case_XMLProcessor::mungeCaseType($name));
+      throw new CRM_Core_Exception($errorMessage);
     }
     $caseTypes[$name] = [
       'module' => E::LONG_NAME,
@@ -324,7 +316,7 @@ function _calendar_civix_civicrm_caseTypes(&$caseTypes) {
  *
  * Note: This hook only runs in CiviCRM 4.5+.
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_angularModules
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_angularModules
  */
 function _calendar_civix_civicrm_angularModules(&$angularModules) {
   if (!is_dir(__DIR__ . '/ang')) {
@@ -343,6 +335,25 @@ function _calendar_civix_civicrm_angularModules(&$angularModules) {
 }
 
 /**
+ * (Delegated) Implements hook_civicrm_themes().
+ *
+ * Find any and return any files matching "*.theme.php"
+ */
+function _calendar_civix_civicrm_themes(&$themes) {
+  $files = _calendar_civix_glob(__DIR__ . '/*.theme.php');
+  foreach ($files as $file) {
+    $themeMeta = include $file;
+    if (empty($themeMeta['name'])) {
+      $themeMeta['name'] = preg_replace(':\.theme\.php$:', '', basename($file));
+    }
+    if (empty($themeMeta['ext'])) {
+      $themeMeta['ext'] = E::LONG_NAME;
+    }
+    $themes[$themeMeta['name']] = $themeMeta;
+  }
+}
+
+/**
  * Glob wrapper which is guaranteed to return an array.
  *
  * The documentation for glob() says, "On some systems it is impossible to
@@ -351,10 +362,9 @@ function _calendar_civix_civicrm_angularModules(&$angularModules) {
  * This wrapper provides consistency.
  *
  * @link http://php.net/glob
- *
  * @param string $pattern
  *
- * @return array, possibly empty
+ * @return array
  */
 function _calendar_civix_glob($pattern) {
   $result = glob($pattern);
@@ -365,18 +375,20 @@ function _calendar_civix_glob($pattern) {
  * Inserts a navigation menu item at a given place in the hierarchy.
  *
  * @param array $menu - menu hierarchy
- * @param string $path - path where insertion should happen (ie.
- *   Administer/System Settings)
- * @param array $item - menu you need to insert (parent/child attributes will
- *   be filled for you)
+ * @param string $path - path to parent of this item, e.g. 'my_extension/submenu'
+ *    'Mailing', or 'Administer/System Settings'
+ * @param array $item - the item to insert (parent/child attributes will be
+ *    filled for you)
+ *
+ * @return bool
  */
 function _calendar_civix_insert_navigation_menu(&$menu, $path, $item) {
   // If we are done going down the path, insert menu
   if (empty($path)) {
     $menu[] = [
       'attributes' => array_merge([
-        'label' => CRM_Utils_Array::value('name', $item),
-        'active' => 1,
+        'label'      => CRM_Utils_Array::value('name', $item),
+        'active'     => 1,
       ], $item),
     ];
     return TRUE;
@@ -391,7 +403,7 @@ function _calendar_civix_insert_navigation_menu(&$menu, $path, $item) {
         if (!isset($entry['child'])) {
           $entry['child'] = [];
         }
-        $found = _calendar_civix_insert_navigation_menu($entry['child'], implode('/', $path), $item, $key);
+        $found = _calendar_civix_insert_navigation_menu($entry['child'], implode('/', $path), $item);
       }
     }
     return $found;
@@ -413,7 +425,7 @@ function _calendar_civix_navigationMenu(&$nodes) {
  */
 function _calendar_civix_fixNavigationMenu(&$nodes) {
   $maxNavID = 1;
-  array_walk_recursive($nodes, function ($item, $key) use (&$maxNavID) {
+  array_walk_recursive($nodes, function($item, $key) use (&$maxNavID) {
     if ($key === 'navID') {
       $maxNavID = max($maxNavID, $item);
     }
@@ -421,11 +433,6 @@ function _calendar_civix_fixNavigationMenu(&$nodes) {
   _calendar_civix_fixNavigationMenuItems($nodes, $maxNavID, NULL);
 }
 
-/**
- * @param $nodes
- * @param $maxNavID
- * @param $parentID
- */
 function _calendar_civix_fixNavigationMenuItems(&$nodes, &$maxNavID, $parentID) {
   $origKeys = array_keys($nodes);
   foreach ($origKeys as $origKey) {
@@ -449,17 +456,22 @@ function _calendar_civix_fixNavigationMenuItems(&$nodes, &$maxNavID, $parentID) 
 /**
  * (Delegated) Implements hook_civicrm_alterSettingsFolders().
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_alterSettingsFolders
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_alterSettingsFolders
  */
 function _calendar_civix_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
-  static $configured = FALSE;
-  if ($configured) {
-    return;
-  }
-  $configured = TRUE;
-
   $settingsDir = __DIR__ . DIRECTORY_SEPARATOR . 'settings';
-  if (is_dir($settingsDir) && !in_array($settingsDir, $metaDataFolders)) {
+  if (!in_array($settingsDir, $metaDataFolders) && is_dir($settingsDir)) {
     $metaDataFolders[] = $settingsDir;
   }
+}
+
+/**
+ * (Delegated) Implements hook_civicrm_entityTypes().
+ *
+ * Find any *.entityType.php files, merge their content, and return.
+ *
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_entityTypes
+ */
+function _calendar_civix_civicrm_entityTypes(&$entityTypes) {
+  $entityTypes = array_merge($entityTypes, []);
 }
