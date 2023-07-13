@@ -70,7 +70,7 @@
 {literal}
 <script type="text/javascript">
   CRM.$(function ($) {
-    var sessionLanguage = (JSON.parse(localStorage.getItem('CRMmenubar')).locale);
+    var sessionLanguage = '{/literal}{$settings.locale}{literal}';
     var calendarCacheLanguage = ($('[data-div="settings"]').attr('data-locale'));
     var languageMap = {/literal}{$settings.languageMap}{literal};
     if (languageMap[sessionLanguage] != undefined && calendarCacheLanguage != undefined

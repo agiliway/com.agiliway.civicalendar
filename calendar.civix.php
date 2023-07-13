@@ -254,7 +254,7 @@ function _calendar_civix_find_files($dir, $pattern) {
     if ($dh = opendir($subdir)) {
       while (FALSE !== ($entry = readdir($dh))) {
         $path = $subdir . DIRECTORY_SEPARATOR . $entry;
-        if ($entry{0} == '.') {
+        if ($entry[0] == '.') {
         }
         elseif (is_dir($path)) {
           $todos[] = $path;
@@ -307,7 +307,7 @@ function _calendar_civix_civicrm_caseTypes(&$caseTypes) {
     $name = preg_replace('/\.xml$/', '', basename($file));
     if ($name != CRM_Case_XMLProcessor::mungeCaseType($name)) {
       $errorMessage = sprintf('Case-type file name is malformed (%s vs %s)', $name, CRM_Case_XMLProcessor::mungeCaseType($name));
-      CRM_Core_Error::fatal($errorMessage);
+      CRM_Core_Error::statusBounce($errorMessage);
     }
     $caseTypes[$name] = [
       'module' => E::LONG_NAME,
@@ -459,7 +459,7 @@ function _calendar_civix_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) 
   $configured = TRUE;
 
   $settingsDir = __DIR__ . DIRECTORY_SEPARATOR . 'settings';
-  if (is_dir($settingsDir) && !in_array($settingsDir, $metaDataFolders)) {
+  if (!in_array($settingsDir, $metaDataFolders) && is_dir($settingsDir)) {
     $metaDataFolders[] = $settingsDir;
   }
 }
