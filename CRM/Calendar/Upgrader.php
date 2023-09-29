@@ -5,7 +5,7 @@ use CRM_Calendar_ExtensionUtil as E;
 /**
  * Collection of upgrade steps.
  */
-class CRM_Calendar_Upgrader extends CRM_Calendar_Upgrader_Base {
+class CRM_Calendar_Upgrader extends CRM_Extension_Upgrader_Base {
 
   public function upgrade_0001() {
     $this->ctx->log->info('Applying update 0001');
