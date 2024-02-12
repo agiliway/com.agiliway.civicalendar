@@ -13,10 +13,10 @@
       </div>
       <div data-div="add-button-open" class="add-button-open" style="display: none">
         {if $case_is_enabled}<a data-popup="0"
-                                href="{crmURL p='civicrm/case/add' q="reset=1&action=add&cid=`$contactId`&context=case" h=0}">{ts}Cases{/ts}</a>
+                                href="{crmURL p='civicrm/case/add' q="reset=1&action=add&cid=$contactId&context=case" h=0}">{ts}Cases{/ts}</a>
         {/if}
         {if $event_is_enabled}<a data-popup="0"
-                                 href="{crmURL p='civicrm/contact/view/participant' q="reset=1&action=add&cid=`$contactId`&context=participant" h=0}">{ts}Events{/ts}</a>
+                                 href="{crmURL p='civicrm/contact/view/participant' q="reset=1&action=add&cid=$contactId&context=participant" h=0}">{ts}Events{/ts}</a>
         {/if}
         <a data-popup="0"
            href="{crmURL p='civicrm/activity' q="reset=1&action=add&context=standalone" h=0}">{ts}Activities{/ts}</a>

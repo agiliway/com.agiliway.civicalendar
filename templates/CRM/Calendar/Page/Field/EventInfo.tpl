@@ -1,5 +1,5 @@
 <li data-li="register_participant" style="display: none;">
-  <a class="crm-participant-counted" href="{crmURL p='civicrm/participant/add' q="reset=1&action=add&context=standalone&eid=`$event.id`"}"><b>{ts}Register Participant{/ts}</b></a>
+  <a class="crm-participant-counted" href="{crmURL p='civicrm/participant/add' q="reset=1&action=add&context=standalone&eid=$event.id"}"><b>{ts}Register Participant{/ts}</b></a>
 </li>
 
 {literal}

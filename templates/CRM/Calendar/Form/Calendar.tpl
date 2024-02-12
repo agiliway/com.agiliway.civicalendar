@@ -12,9 +12,9 @@
         {ts}Add{/ts}</div>
       <div data-div="add-button-open" class="add-button-open" style="display: none">
         {if $case_is_enabled}
-          <a data-popup="0" href="{crmURL p='civicrm/case/add' q="reset=1&action=add&cid=`$contactId`&context=case" h=0}">{ts}Case{/ts}</a>{/if}
+          <a data-popup="0" href="{crmURL p='civicrm/case/add' q="reset=1&action=add&cid=$contactId&context=case" h=0}">{ts}Case{/ts}</a>{/if}
         {if $event_is_enabled}
-          <a data-popup="0" href="{crmURL p='civicrm/contact/view/participant' q="reset=1&action=add&cid=`$contactId`&context=participant" h=0}">{ts}Event{/ts}</a>{/if}
+          <a data-popup="0" href="{crmURL p='civicrm/contact/view/participant' q="reset=1&action=add&cid=$contactId&context=participant" h=0}">{ts}Event{/ts}</a>{/if}
         <a data-popup="0" href="{crmURL p='civicrm/activity' q="reset=1&action=add&context=standalone" h=0}">{ts}Activity{/ts}</a>
       </div>
     </div>
@@ -268,7 +268,7 @@
       }
 
       {/literal}
-      var url = "{crmURL p="civicrm/ajax/calendar" q="cid=`$contactId`" h=0}";
+      var url = "{crmURL p="civicrm/ajax/calendar" q="cid=$contactId" h=0}";
       {literal}
 
       CRM.$.ajax({
