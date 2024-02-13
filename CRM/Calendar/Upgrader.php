@@ -29,12 +29,10 @@ class CRM_Calendar_Upgrader extends CRM_Extension_Upgrader_Base {
   }
 
   public function install() {
-    $this->executeSqlFile('sql/install.sql');
     $this->addMenuItems();
   }
 
   public function uninstall() {
-    $this->executeSqlFile('sql/uninstall.sql');
     $this->deleteMenuItems();
   }
 
